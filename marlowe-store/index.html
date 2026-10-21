@@ -41,24 +41,31 @@ li b{color:var(--ink);font-weight:500;min-width:145px;flex-shrink:0}
 <body>
 <div class="wrap">
 <a class="back" href="../index.html">← Portfólio</a>
+
 <div class="eyebrow">WooCommerce · WordPress · PHP</div>
 <h1>Marlowe Studio</h1>
 <p class="lede">Loja de vestuário de dança construída sobre WordPress e WooCommerce. Catálogo completo, variantes de tamanho e cor, carrinho, checkout com transferência bancária — e uma encomenda processada de ponta a ponta.</p>
+
 <div class="grid">
   <div class="stat"><div class="n">20</div><div class="l">Produtos</div></div>
   <div class="stat"><div class="n">12</div><div class="l">Categorias</div></div>
   <div class="stat"><div class="n">79</div><div class="l">Variações</div></div>
 </div>
+
 <h2>A loja a funcionar</h2>
+
 <figure>
   <img src="../thumbs/store-shop.png" alt="Grelha de produtos da loja Marlowe Studio" loading="lazy">
   <figcaption><b>Catálogo.</b> 20 produtos em 12 categorias, com preços, imagens e botões de compra. Paginação e ordenação funcionais.</figcaption>
 </figure>
+
 <figure>
   <img src="../thumbs/store-checkout.png" alt="Checkout com formulário de faturação e resumo do pedido" loading="lazy">
   <figcaption><b>Checkout.</b> Formulário de faturação, resumo do pedido com subtotal, e dois métodos de pagamento configurados.</figcaption>
 </figure>
-<a class="cta" href="#" onclick="alert('Esta demo corre num servidor local. As capturas acima mostram o catalogo e o checkout reais.');return false;">Ver capturas da loja →</a>
+
+<a class="cta" href="http://127.0.0.1:8080/shop/" target="_blank" rel="noopener">Abrir a loja ao vivo →</a>
+
 <h2>O que foi implementado</h2>
 <ul>
   <li><b>Catálogo</b>20 produtos com SKU único, preço em USD e imagem em todos</li>
@@ -70,15 +77,18 @@ li b{color:var(--ink);font-weight:500;min-width:145px;flex-shrink:0}
   <li><b>Encomendas</b>Pedido #150 processado de ponta a ponta com número gerado</li>
   <li><b>Tema</b>Storefront, o tema oficial do WooCommerce</li>
 </ul>
+
 <h2>Nota técnica</h2>
 <ul>
   <li><b>Base de dados</b>SQLite em desenvolvimento (produção usaria MySQL)</li>
   <li><b>Pagamentos</b>Em modo de teste — nenhum cartão real é processado</li>
   <li><b>Imagens</b>Placeholders gerados por script, não fotografias de produto</li>
 </ul>
+
 <div class="note">
-<strong>Demonstração conceptual.</strong> A marca, os produtos, os preços e os dados de clientes são fictícios e foram criados para demonstrar a implementação técnica. A loja corre em servidor local; o portfólio mostra capturas reais do catalogo e do checkout.
+<strong>Demonstração conceptual.</strong> A marca, os produtos, os preços e os dados de clientes são fictícios e foram criados para demonstrar a implementação técnica. O link ao vivo aponta para um servidor local — disponível apenas enquanto estiver a correr.
 </div>
+
 </div>
 </body>
 </html>

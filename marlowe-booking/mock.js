@@ -34,10 +34,11 @@
       var t = base[i];
       var key = date + ' ' + t;
       var taken = !!booked[key];
+      var past = false;
       out.push({
         time: t,
-        available: !taken,
-        reason: taken ? 'Already booked' : ''
+        available: !taken && !past,
+        reason: taken ? 'Already booked' : (past ? 'Too late to book' : '')
       });
     }
     return out;
@@ -49,16 +50,19 @@
     var url = typeof input === 'string' ? input : (input && input.url) || '';
     var method = ((init && init.method) || 'GET').toUpperCase();
 
+    // /api/services
     if (url.indexOf('/api/services') === 0) {
       return jsonRes({ services: SERVICES });
     }
 
+    // /api/slots?date=YYYY-MM-DD
     if (url.indexOf('/api/slots') === 0) {
       var m = /date=([^&]+)/.exec(url);
       var date = m ? decodeURIComponent(m[1]) : '';
       return jsonRes({ slots: slotsFor(date) });
     }
 
+    // /api/book (POST)
     if (url.indexOf('/api/book') === 0 && method === 'POST') {
       var body = {};
       try { body = JSON.parse(init.body || '{}'); } catch (e) { body = {}; }
@@ -92,6 +96,7 @@
       });
     }
 
+    // /api/review (POST)
     if (url.indexOf('/api/review') === 0 && method === 'POST') {
       var b2 = {};
       try { b2 = JSON.parse(init.body || '{}'); } catch (e) { b2 = {}; }
@@ -101,10 +106,12 @@
       return jsonRes({ ok: true, message: 'Review submitted for moderation.' });
     }
 
+    // /api/reviews
     if (url.indexOf('/api/reviews') === 0) {
       return jsonRes({ reviews: REVIEWS });
     }
 
+    // tudo o resto vai para a rede normal
     return realFetch(input, init);
   };
 })();

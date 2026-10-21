@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>H Studio — Panel de administración</title>
+<style>
+@font-face{font-family:'Playfair';src:url('../fonts/playfair-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Playfair';src:url('../fonts/playfair-600.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Inter';src:url('../fonts/inter-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Inter';src:url('../fonts/inter-500.woff2') format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Inter';src:url('../fonts/inter-600.woff2') format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Inter';src:url('../fonts/inter-700.woff2') format('woff2');font-weight:700;font-display:swap}
+
+:root{
+  --navy-900:#081428;--navy-800:#0b1a33;--navy-700:#122a4d;--navy-600:#16325c;
+  --line:rgba(255,255,255,.08);--line-strong:rgba(255,255,255,.14);
+  --ink:#eaf0f8;--muted:#9fb0c9;--gold:#f5b731;--gold-hover:#ffc94d;
+  --green:#3ddc84;--red:#f16a5f;--amber:#f2b544;
+  --serif:'Playfair',Georgia,serif;--sans:'Inter',-apple-system,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--navy-800);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+
+/* ---- shell ---- */
+.shell{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+.side{background:var(--navy-900);border-right:1px solid var(--line);padding:22px 0;display:flex;flex-direction:column}
+.brand{display:flex;align-items:center;gap:9px;padding:0 22px 22px;font-weight:700;font-size:15px;border-bottom:1px solid var(--line);margin-bottom:16px}
+.brand svg{color:var(--ink)}
+.nav{display:flex;flex-direction:column;gap:2px;padding:0 12px}
+.nav a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;font-size:13.5px;font-weight:500;color:var(--muted);transition:all .14s}
+.nav a:hover{background:rgba(255,255,255,.05);color:var(--ink)}
+.nav a.active{background:var(--navy-700);color:var(--ink);box-shadow:inset 2px 0 0 var(--gold)}
+.side-foot{margin-top:auto;padding:16px 22px 0;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+.user{display:flex;align-items:center;gap:10px;margin-top:12px}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--navy-600);display:grid;place-items:center;font-weight:600;font-size:12px;color:var(--ink)}
+.user .meta{line-height:1.25}
+.user .meta b{display:block;font-size:12.5px;color:var(--ink);font-weight:600}
+.user .meta span{font-size:11px;color:var(--muted)}
+
+.main{padding:26px 32px 50px;min-width:0}
+.top{display:flex;align-items:center;gap:16px;margin-bottom:24px;flex-wrap:wrap}
+.top h1{font-family:var(--serif);font-weight:400;font-size:28px;letter-spacing:-.02em}
+.top .spacer{flex:1}
+.role-switch{display:flex;background:var(--navy-900);border:1px solid var(--line-strong);border-radius:9px;padding:3px;gap:2px}
+.role-switch button{font:inherit;font-size:12px;font-weight:600;padding:7px 14px;border:0;border-radius:7px;background:none;color:var(--muted);cursor:pointer;transition:all .14s}
+.role-switch button.on{background:var(--navy-600);color:var(--ink)}
+
+/* ---- stats ---- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:24px}
+.stat{background:var(--navy-700);border:1px solid var(--line-strong);border-radius:12px;padding:18px}
+.stat .label{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+.stat .value{font-family:var(--serif);font-size:30px;margin-top:6px;letter-spacing:-.02em}
+.stat .sub{font-size:12px;color:var(--muted);margin-top:2px}
+
+/* ---- filters ---- */
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;align-items:flex-end}
+.f{display:flex;flex-direction:column;gap:5px;min-width:0}
+.f label{font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600}
+.f input,.f select{font:inherit;font-size:13px;padding:9px 11px;border-radius:8px;border:1px solid var(--line-strong);background:var(--navy-700);color:var(--ink);min-width:150px}
+.f input:focus,.f select:focus{outline:none;border-color:var(--gold)}
+.btn{font:inherit;font-weight:600;font-size:13px;padding:9px 16px;border-radius:8px;border:1px solid transparent;cursor:pointer;background:var(--gold);color:var(--navy-900);transition:all .14s}
+.btn:hover{background:var(--gold-hover)}
+.btn.ghost{background:transparent;border-color:var(--line-strong);color:var(--ink)}
+.btn.ghost:hover{background:var(--navy-600)}
+
+/* ---- table ---- */
+.tablewrap{background:var(--navy-700);border:1px solid var(--line-strong);border-radius:12px;overflow:hidden}
+table{width:100%;border-collapse:collapse}
+th,td{padding:13px 16px;text-align:left;font-size:13.5px;border-bottom:1px solid var(--line)}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;background:var(--navy-600)}
+tr:last-child td{border-bottom:0}
+tbody tr{transition:background .12s}
+tbody tr:hover{background:rgba(255,255,255,.03)}
+td .school{font-weight:600}
+td .sub{font-size:12px;color:var(--muted)}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px;text-transform:uppercase;letter-spacing:.04em}
+.pill.confirmed{background:rgba(61,220,132,.13);color:var(--green)}
+.pill.pending{background:rgba(242,181,68,.13);color:var(--amber)}
+.pill.cancelled{background:rgba(241,106,95,.13);color:var(--red)}
+.rowactions{display:flex;gap:6px;justify-content:flex-end}
+.iconbtn{width:28px;height:28px;border-radius:7px;border:1px solid var(--line-strong);background:transparent;color:var(--muted);cursor:pointer;display:grid;place-items:center;transition:all .14s;font-size:13px}
+.iconbtn:hover{background:var(--navy-600);color:var(--ink)}
+.iconbtn.ok:hover{color:var(--green);border-color:rgba(61,220,132,.4)}
+.iconbtn.no:hover{color:var(--red);border-color:rgba(241,106,95,.4)}
+.hidden{display:none}
+.empty{padding:44px;text-align:center;color:var(--muted);font-size:13.5px}
+
+/* photographer view: narrower, fewer columns */
+body.photo th.col-money,body.photo td.col-money,body.photo th.col-actions,body.photo td.col-actions{display:none}
+body.photo .adminonly{display:none}
+
+@media(max-width:900px){
+  .shell{grid-template-columns:1fr}
+  .side{display:none}
+  .main{padding:18px 16px 40px}
+  .tablewrap{overflow-x:auto}
+  table{min-width:680px}
+  .top h1{font-size:22px}
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <aside class="side">
+    <div class="brand">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+      H Studio
+    </div>
+    <nav class="nav">
+      <a href="#" class="active">Reservas</a>
+      <a href="#">Colégios</a>
+      <a href="#">Paquetes</a>
+      <a href="#">Galerías</a>
+      <a href="#" class="adminonly">Usuarios</a>
+      <a href="#" class="adminonly">Ajustes</a>
+    </nav>
+    <div class="side-foot">
+      <div class="user">
+        <div class="avatar" id="avatar">M</div>
+        <div class="meta">
+          <b id="username">María López</b>
+          <span id="userrole">Administradora</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="top">
+      <h1>Reservas</h1>
+      <div class="spacer"></div>
+      <div class="role-switch" role="group" aria-label="Cambiar rol">
+        <button data-role="admin" class="on">Admin</button>
+        <button data-role="photo">Fotógrafo</button>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="label">Total</div><div class="value" id="stat-total">—</div><div class="sub">reservas</div></div>
+      <div class="stat"><div class="label">Confirmadas</div><div class="value" id="stat-confirmed">—</div><div class="sub">listas para el acto</div></div>
+      <div class="stat"><div class="label">Pendientes</div><div class="value" id="stat-pending">—</div><div class="sub">sin confirmar</div></div>
+      <div class="stat adminonly"><div class="label">Ingresos previstos</div><div class="value" id="stat-revenue">—</div><div class="sub">IVA no incluido</div></div>
+    </div>
+
+    <div class="filters">
+      <div class="f">
+        <label for="f-date">Desde</label>
+        <input type="date" id="f-date">
+      </div>
+      <div class="f">
+        <label for="f-school">Colégio</label>
+        <select id="f-school"><option value="">Todos</option></select>
+      </div>
+      <div class="f">
+        <label for="f-status">Estado</label>
+        <select id="f-status">
+          <option value="">Todos</option>
+          <option value="confirmed">Confirmada</option>
+          <option value="pending">Pendiente</option>
+          <option value="cancelled">Cancelada</option>
+        </select>
+      </div>
+      <button class="btn ghost" id="f-clear">Limpiar</button>
+    </div>
+
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Colégio / Curso</th>
+            <th>Paquete</th>
+            <th class="col-money adminonly">Alumnos</th>
+            <th>Estado</th>
+            <th class="col-actions">Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div class="empty hidden" id="empty">Ninguna reserva coincide con los filtros.</div>
+    </div>
+  </main>
+</div>
+
+<script>
+const BOOKINGS = [
+  { id: 1, date: '2026-06-12', school: 'IES Ramón y Cajal', course: '2º Bachillerato', pkg: 'Clásico', students: 62, status: 'confirmed', price: 2790 },
+  { id: 2, date: '2026-06-14', school: 'Colegio San Agustín', course: '4º ESO', pkg: 'Solo Digital', students: 48, status: 'confirmed', price: 1440 },
+  { id: 3, date: '2026-06-15', school: 'IES Ramón y Cajal', course: 'FP Superior', pkg: 'Clásico', students: 31, status: 'pending', price: 1395 },
+  { id: 4, date: '2026-06-18', school: 'Universidad de Alcalá', course: 'Grado en Derecho', pkg: 'Solo Digital', students: 120, status: 'confirmed', price: 3600 },
+  { id: 5, date: '2026-06-19', school: 'Colegio San Agustín', course: 'Educación Primaria', pkg: 'Clásico', students: 55, status: 'cancelled', price: 2475 },
+  { id: 6, date: '2026-06-21', school: 'Escuela de Arte', course: 'Enseñanzas Artísticas', pkg: 'Solo Digital', students: 22, status: 'pending', price: 660 },
+  { id: 7, date: '2026-06-24', school: 'IES Ramón y Cajal', course: '1º Bachillerato', pkg: 'Clásico', students: 78, status: 'confirmed', price: 3510 },
+];
+
+const state = { role: 'admin', from: '', school: '', status: '' };
+const $ = id => document.getElementById(id);
+const money = n => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
+const fmtDate = iso => { const [y,m,d] = iso.split('-'); return `${d}/${m}/${y}`; };
+
+function fillSchools() {
+  const schools = [...new Set(BOOKINGS.map(b => b.school))].sort();
+  const sel = $('f-school');
+  schools.forEach(s => { const o = document.createElement('option'); o.value = s; o.textContent = s; sel.appendChild(o); });
+}
+
+function filtered() {
+  return BOOKINGS.filter(b => {
+    if (state.from && b.date < state.from) return false;
+    if (state.school && b.school !== state.school) return false;
+    if (state.status && b.status !== state.status) return false;
+    return true;
+  }).sort((a, b) => a.date.localeCompare(b.date));
+}
+
+const LABELS = { confirmed: 'Confirmada', pending: 'Pendiente', cancelled: 'Cancelada' };
+
+function render() {
+  const rows = filtered();
+  const tbody = $('rows');
+  tbody.innerHTML = '';
+
+  rows.forEach(b => {
+    const tr = document.createElement('tr');
+    tr.dataset.id = b.id;
+    tr.innerHTML = `
+      <td>${fmtDate(b.date)}</td>
+      <td><div class="school">${b.school}</div><div class="sub">${b.course}</div></td>
+      <td>${b.pkg}</td>
+      <td class="col-money adminonly">${b.students}</td>
+      <td><span class="pill ${b.status}">${LABELS[b.status]}</span></td>
+      <td class="col-actions"><div class="rowactions">
+        ${b.status !== 'confirmed' ? '<button class="iconbtn ok" data-act="confirm" title="Confirmar">✓</button>' : ''}
+        ${b.status !== 'cancelled' ? '<button class="iconbtn no" data-act="cancel" title="Cancelar">✕</button>' : ''}
+      </div></td>`;
+    tbody.appendChild(tr);
+  });
+
+  $('empty').classList.toggle('hidden', rows.length > 0);
+
+  // Stats reflect the current filter, not the whole dataset: a filtered view
+  // whose totals ignore the filter is misleading.
+  const total = rows.length;
+  const confirmed = rows.filter(b => b.status === 'confirmed').length;
+  const pending = rows.filter(b => b.status === 'pending').length;
+  const revenue = rows.filter(b => b.status === 'confirmed').reduce((a, b) => a + b.price, 0);
+  $('stat-total').textContent = total;
+  $('stat-confirmed').textContent = confirmed;
+  $('stat-pending').textContent = pending;
+  $('stat-revenue').textContent = money(revenue);
+}
+
+function setRole(role) {
+  state.role = role;
+  document.body.classList.toggle('photo', role === 'photo');
+  document.querySelectorAll('.role-switch button').forEach(b => b.classList.toggle('on', b.dataset.role === role));
+  $('username').textContent = role === 'admin' ? 'María López' : 'Javier Ruiz';
+  $('userrole').textContent = role === 'admin' ? 'Administradora' : 'Fotógrafo';
+  $('avatar').textContent = role === 'admin' ? 'M' : 'J';
+}
+
+// Actions mutate in-memory state only. The demo has no backend on purpose:
+// the brief asks for a visual and operational prototype.
+$('rows').addEventListener('click', e => {
+  const btn = e.target.closest('button[data-act]');
+  if (!btn) return;
+  const tr = btn.closest('tr');
+  const id = Number(tr.dataset.id);
+  const booking = BOOKINGS.find(b => b.id === id);
+  if (!booking) return;
+  booking.status = btn.dataset.act === 'confirm' ? 'confirmed' : 'cancelled';
+  render();
+});
+
+$('f-date').addEventListener('change', e => { state.from = e.target.value; render(); });
+$('f-school').addEventListener('change', e => { state.school = e.target.value; render(); });
+$('f-status').addEventListener('change', e => { state.status = e.target.value; render(); });
+$('f-clear').addEventListener('click', () => {
+  state.from = state.school = state.status = '';
+  $('f-date').value = ''; $('f-school').value = ''; $('f-status').value = '';
+  render();
+});
+
+document.querySelectorAll('.role-switch button').forEach(b => {
+  b.addEventListener('click', () => setRole(b.dataset.role));
+});
+
+fillSchools();
+render();
+</script>
+</body>
+</html>
