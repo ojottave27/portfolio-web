@@ -1,0 +1,47 @@
+{
+  "trend_countries": 25,
+  "trend_significant": 21,
+  "steepest_rise": {
+    "iso3": "IND",
+    "slope_pp_per_year": 1.71,
+    "ci_low": 1.51,
+    "ci_high": 1.911,
+    "p_value": 0.0,
+    "r_squared": 0.928,
+    "n_years": 26,
+    "significant": true
+  },
+  "steepest_fall": {
+    "iso3": "BRA",
+    "slope_pp_per_year": -0.6,
+    "ci_low": -0.892,
+    "ci_high": -0.309,
+    "p_value": 0.0003,
+    "r_squared": 0.43,
+    "n_years": 26,
+    "significant": true
+  },
+  "median_slope": 0.396,
+  "pooled_slope": -0.0359,
+  "pooled_r2": 0.1739,
+  "pooled_p": 2.1118653634530788e-27,
+  "pre_post": {
+    "countries": 25,
+    "improved": 17,
+    "declined": 8,
+    "largest_decline": {
+      "iso3": "BRA",
+      "pp": -11.34
+    },
+    "largest_gain": {
+      "iso3": "ETH",
+      "pp": 19.67
+    }
+  },
+  "figures": [
+    "C:\\Users\\84140\\ZS\\portfolio\\health-stats\\figures\\fig1_coverage_trends.png",
+    "C:\\Users\\84140\\ZS\\portfolio\\health-stats\\figures\\fig2_cases_heatmap.png",
+    "C:\\Users\\84140\\ZS\\portfolio\\health-stats\\figures\\fig3_coverage_vs_cases.png",
+    "C:\\Users\\84140\\ZS\\portfolio\\health-stats\\figures\\fig4_pre_post_2019.png"
+  ]
+}
