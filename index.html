@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Web — Portfólio de Desenvolvimento</title>
-<meta name="description" content="Quatro projetos web: e-commerce WooCommerce, sistema de reservas, painel de administração e experiência 3D em WebGL.">
+<title>Portfólio — Desenvolvimento Web e Análise de Dados</title>
+<meta name="description" content="Duas prateleiras de trabalho: quatro projetos web completos (WooCommerce, Three.js, reservas, painel) e análise de dados de saúde pública com métodos auditáveis.">
 <style>
 @font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('./fonts/inter-400.woff2') format('woff2')}
 @font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url('./fonts/inter-500.woff2') format('woff2')}
@@ -21,6 +21,7 @@
   --ink:#f2f0eb;
   --muted:#8b8f9c;
   --amber:#f5a623;
+  --data:#5eead4;
   --line:rgba(255,255,255,.08);
   --serif:'Playfair Display',Georgia,serif;
   --sans:'Inter',system-ui,-apple-system,sans-serif;
@@ -42,16 +43,33 @@ header{padding:40px 0 0}
 .top nav a:hover{color:var(--ink)}
 
 /* hero */
-.hero{padding:96px 0 72px;max-width:760px}
+.hero{padding:96px 0 72px;max-width:780px}
 .eyebrow{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--amber);font-weight:600;margin-bottom:26px}
 h1{font-family:var(--serif);font-weight:400;font-size:clamp(40px,6.4vw,76px);line-height:1.02;letter-spacing:-.022em}
 h1 em{color:var(--amber);font-style:italic}
-.lede{margin-top:28px;font-size:17px;line-height:1.7;color:var(--muted);max-width:520px}
+h1 em.d{color:var(--data)}
+.lede{margin-top:28px;font-size:17px;line-height:1.7;color:var(--muted);max-width:560px}
+
+/* shelf heading */
+.shelf{
+  display:grid;grid-template-columns:auto 1fr;gap:4px 18px;align-items:baseline;
+  padding:26px 0 4px;border-top:1px solid var(--line);margin-bottom:26px;
+}
+.shelf-label{
+  font-family:var(--serif);font-size:13px;color:var(--amber);
+  letter-spacing:.1em;grid-row:span 2;align-self:start;padding-top:6px;
+}
+.shelf-label.d{color:var(--data)}
+.shelf-title{
+  font-family:var(--serif);font-weight:400;font-size:clamp(24px,3.2vw,32px);
+  letter-spacing:-.015em;grid-column:2;line-height:1.15;
+}
+.shelf-sub{grid-column:2;font-size:14px;color:var(--muted);margin:6px 0 0}
 
 /* grid */
 .grid{
   display:grid;grid-template-columns:repeat(2,1fr);gap:22px;
-  padding:20px 0 90px;
+  padding:0 0 64px;
 }
 .card{
   display:flex;flex-direction:column;
@@ -60,6 +78,7 @@ h1 em{color:var(--amber);font-style:italic}
   transition:border-color .4s ease,transform .4s cubic-bezier(.22,1,.36,1),background .4s ease;
 }
 .card:hover{border-color:rgba(245,166,35,.42);transform:translateY(-5px);background:var(--surface-2)}
+.card.card-data:hover{border-color:rgba(94,234,212,.42)}
 .thumb{
   aspect-ratio:16/10;position:relative;overflow:hidden;
   background:linear-gradient(135deg,#1a1d27,#0d0f15);
@@ -77,11 +96,19 @@ h1 em{color:var(--amber);font-style:italic}
   transition:opacity .45s ease;
 }
 .card:hover .thumb::after{opacity:.6}
+
+/* light thumbnail for the chart */
+.thumb-light{background:#fff;padding:0}
+.thumb-light img{object-fit:cover;object-position:top center;opacity:1;background:#fff}
+.thumb-light::after{display:none}
+.card:hover .thumb-light img{transform:scale(1.02)}
+
 .body{padding:26px 26px 30px;display:flex;flex-direction:column;flex:1}
 .tag{
   font-size:10px;letter-spacing:.2em;text-transform:uppercase;
   color:var(--amber);font-weight:600;margin-bottom:12px;
 }
+.tag.tag-data{color:var(--data)}
 .card h2{font-family:var(--serif);font-weight:400;font-size:25px;letter-spacing:-.01em;margin-bottom:10px}
 .card p{font-size:14.5px;line-height:1.62;color:var(--muted);flex:1}
 .foot{
@@ -90,9 +117,10 @@ h1 em{color:var(--amber);font-style:italic}
   font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
 }
 .foot .go{color:var(--amber);transition:transform .3s}
+.card-data .foot .go{color:var(--data)}
 .card:hover .foot .go{transform:translateX(4px)}
 
-/* nota */
+/* note */
 .note{
   border-top:1px solid var(--line);border-bottom:1px solid var(--line);
   padding:30px 0;margin-bottom:70px;
@@ -111,6 +139,9 @@ footer{padding:0 0 56px;display:flex;justify-content:space-between;gap:20px;font
   .top{flex-direction:column;align-items:flex-start;gap:18px}
   .note{grid-template-columns:1fr;gap:12px}
   footer{flex-direction:column;gap:8px}
+  .shelf{grid-template-columns:1fr;gap:2px}
+  .shelf-label{grid-row:auto;padding-top:0}
+  .shelf-title,.shelf-sub{grid-column:1}
 }
 </style>
 </head>
@@ -119,21 +150,28 @@ footer{padding:0 0 56px;display:flex;justify-content:space-between;gap:20px;font
 
   <header>
     <div class="top">
-      <div class="logo">WEB</div>
+      <div class="logo">PORTFÓLIO</div>
       <nav>
-        <a href="#projetos">Projetos</a>
+        <a href="#web">Web</a>
+        <a href="#dados">Dados</a>
         <a href="#nota">Sobre</a>
       </nav>
     </div>
   </header>
 
   <section class="hero">
-    <div class="eyebrow">Design &amp; Desenvolvimento</div>
-    <h1>Sites que<br>funcionam de <em>verdade</em>.</h1>
-    <p class="lede">Quatro projetos construídos do zero — e-commerce completo, sistema de reservas, painel de gestão e uma experiência 3D em WebGL. Não são maquetes: cada um corre, processa e falha como um site real.</p>
+    <div class="eyebrow">Desenvolvimento &amp; Análise</div>
+    <h1>Sites que funcionam.<br>Dados que <em class="d">provam</em>.</h1>
+    <p class="lede">Duas prateleiras de trabalho. Quatro aplicações web construídas do zero — e-commerce, reservas, painel e 3D em WebGL. E análise de dados sobre indicadores de saúde pública, com métodos auditáveis e limites assumidos. Nada aqui é maquete: cada peça corre, processa e falha como a coisa real.</p>
   </section>
 
-  <section class="grid" id="projetos">
+  <div class="shelf" id="web">
+    <span class="shelf-label">01</span>
+    <h2 class="shelf-title">Desenvolvimento web</h2>
+    <p class="shelf-sub">Quatro aplicações completas, do frontend ao pagamento.</p>
+  </div>
+
+  <section class="grid">
 
     <a class="card" href="./marlowe-store/">
       <div class="thumb"><img src="./thumbs/store-shop.png" alt="Marlowe Studio - loja WooCommerce" loading="lazy"></div>
@@ -175,16 +213,46 @@ footer{padding:0 0 56px;display:flex;justify-content:space-between;gap:20px;font
       </div>
     </a>
 
+    <a class="card" href="./nhwz-planner/">
+      <div class="thumb"><img src="./thumbs/nhwz.png" alt="Sustainability Week Zurich - planner de eventos" loading="lazy"></div>
+      <div class="body">
+        <div class="tag">HTML · CSS · JavaScript · Playwright</div>
+        <h2>Sustainability Week Zurich</h2>
+        <p>Planner de eventos com filtros de campus, categoria e idioma, lista de guardados em localStorage e 16 verificações de aceitação automatizadas. O checklist entregue é o output de um script que corre em Chromium.</p>
+        <div class="foot"><span>Ver planner</span><span class="go">→</span></div>
+      </div>
+    </a>
+
+  </section>
+
+  <div class="shelf" id="dados">
+    <span class="shelf-label d">02</span>
+    <h2 class="shelf-title">Dados &amp; análise</h2>
+    <p class="shelf-sub">Pipelines reprodutíveis, métodos declarados, limites assumidos.</p>
+  </div>
+
+  <section class="grid">
+
+    <a class="card card-data" href="./health-stats/">
+      <div class="thumb thumb-light"><img src="./health-stats/figures/fig1_coverage_trends.png" alt="Grafico de cobertura vacinal do sarampo em 25 paises, 2000 a 2025" loading="lazy"></div>
+      <div class="body">
+        <div class="tag tag-data">Python · pandas · statsmodels</div>
+        <h2>Sarampo: cobertura e casos</h2>
+        <p>25 países, 2000–2025, dados da OMS. Tendências por país com intervalos de confiança, regressão pooled com p &lt; 0,001, e um R² de 0,174 reportado como achado — não como falha. Três scripts, reprodutibilidade verificada por regeneração completa.</p>
+        <div class="foot"><span>Ver análise</span><span class="go">→</span></div>
+      </div>
+    </a>
+
   </section>
 
   <div class="note" id="nota">
     <div class="mark">※</div>
-    <p><strong>Todos os projetos são demonstrações conceptuais.</strong> As marcas, produtos, preços e dados de clientes são fictícios e foram criados para demonstrar implementação técnica. Nenhum representa um cliente real. O Helios é uma demonstração de execução — não é direção de arte original.</p>
+    <p><strong>Todos os projetos web são demonstrações conceptuais.</strong> As marcas, produtos, preços e dados de clientes são fictícios e foram criados para demonstrar implementação técnica. Nenhum representa um cliente real. O Helios é uma demonstração de execução — não é direção de arte original. <strong>A análise de dados usa fontes públicas da OMS</strong> (CC BY-NC-SA 3.0 IGO) e serve para demonstrar método, não para produzir conclusões sobre os países analisados.</p>
   </div>
 
   <footer>
-    <span>Portfólio web · 2026</span>
-    <span>HTML · CSS · JavaScript · WordPress · Three.js</span>
+    <span>Portfólio · 2026</span>
+    <span>HTML · CSS · JavaScript · WordPress · Three.js · Python · pandas</span>
   </footer>
 
 </div>
