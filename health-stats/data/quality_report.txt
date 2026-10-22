@@ -1,0 +1,32 @@
+DATA QUALITY REPORT - WHO measles indicators
+============================================================
+Source: WHO Global Health Observatory (CC BY-NC-SA 3.0 IGO)
+Window: 2000-2025
+
+Row counts
+------------------------------------------------------------
+  coverage: 650 raw rows
+  coverage: 650 clean rows, 25 countries
+  cases: 1173 raw rows
+  cases: 618 clean rows, 25 countries
+  merged: 650 rows -> C:\Users\84140\ZS\portfolio\health-stats\data\clean_measles.csv
+
+Coverage completeness
+------------------------------------------------------------
+  100.0% of country-years have a coverage value
+
+Countries with year gaps
+------------------------------------------------------------
+  none
+
+Decisions applied
+------------------------------------------------------------
+  [cases_year_filter] restricted to 2000-2025 to match the coverage window
+      dropped: 555
+  [merge] outer join on (country, year); unmatched rows are KEPT and flagged, not dropped
+      only_in_coverage: 32
+      only_in_cases: 0
+      in_both: 618
+  [missing_values] imputing surveillance counts would fabricate data. Gaps are reported per country in quality_report.txt so the reader knows where a trend line is incomplete.
+      approach: no imputation
+      countries_with_gaps: 0
