@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Measles coverage and cases — 25-country analysis</title>
+<meta name="description" content="Longitudinal analysis of measles vaccination coverage and reported cases across 25 countries, 2000-2025. WHO Global Health Observatory data.">
+<style>
+:root{
+  --ink:#141a1f;--ink-soft:#4a5560;--ink-faint:#7d8794;
+  --line:#dfe4ea;--bg:#fbfcfd;--card:#fff;
+  --accent:#1a5e3a;--accent-soft:#eaf3ee;
+  --warn:#b8860b;--warn-soft:#fdf8e8;
+  --max:760px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  line-height:1.65;font-size:17px;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+header.hero{
+  background:var(--accent);color:#fff;padding:64px 0 56px;margin-bottom:56px;
+}
+header.hero .wrap{max-width:var(--max)}
+.eyebrow{
+  font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+  color:#a8d5bd;font-weight:700;margin:0 0 16px;
+}
+header.hero h1{
+  margin:0 0 20px;font-size:clamp(28px,4.5vw,42px);line-height:1.15;
+  font-weight:700;letter-spacing:-.02em;max-width:20ch;
+}
+header.hero .sub{
+  margin:0;font-size:17px;color:#cfe6da;max-width:52ch;line-height:1.55;
+}
+.meta{
+  margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,.18);
+  display:flex;flex-wrap:wrap;gap:24px 40px;font-size:13px;color:#a8d5bd;
+}
+.meta strong{display:block;color:#fff;font-size:15px;font-weight:600;margin-bottom:2px}
+
+main{padding-bottom:80px}
+section{margin-bottom:56px}
+h2{
+  font-size:13px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);font-weight:700;margin:0 0 20px;
+  padding-bottom:10px;border-bottom:2px solid var(--accent-soft);
+}
+h3{
+  font-size:20px;font-weight:600;margin:36px 0 14px;line-height:1.3;
+  letter-spacing:-.01em;
+}
+p{margin:0 0 18px}
+.lead{font-size:19px;line-height:1.6;color:var(--ink-soft)}
+strong{font-weight:600;color:var(--ink)}
+
+.callout{
+  background:var(--card);border-left:4px solid var(--accent);
+  padding:20px 24px;margin:28px 0;border-radius:0 6px 6px 0;
+  box-shadow:0 1px 3px rgba(20,26,31,.06);
+}
+.callout p:last-child{margin-bottom:0}
+.callout.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+
+.stats{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:16px;margin:32px 0;
+}
+.stat{
+  background:var(--card);border:1px solid var(--line);border-radius:8px;
+  padding:20px;text-align:center;
+}
+.stat .n{
+  font-size:30px;font-weight:700;color:var(--accent);line-height:1;
+  letter-spacing:-.02em;margin-bottom:8px;
+}
+.stat .l{font-size:12px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.08em;line-height:1.35}
+
+figure{margin:32px 0}
+figure img{width:100%;height:auto;border:1px solid var(--line);border-radius:6px;display:block}
+figcaption{
+  font-size:13.5px;color:var(--ink-faint);margin-top:12px;line-height:1.5;
+  padding-left:2px;
+}
+
+table{width:100%;border-collapse:collapse;margin:24px 0;font-size:15px}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line)}
+th{
+  font-size:12px;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--ink-faint);font-weight:600;background:#f5f7f9;
+}
+td.num{font-variant-numeric:tabular-nums;text-align:right}
+tr:last-child td{border-bottom:none}
+
+code{
+  font-family:"SF Mono",Consolas,Monaco,monospace;font-size:.88em;
+  background:#f0f3f5;padding:2px 6px;border-radius:3px;color:#2a3a46;
+}
+pre{
+  background:#1c252c;color:#d8e3ea;padding:20px 24px;border-radius:8px;
+  overflow-x:auto;font-size:14px;line-height:1.55;margin:24px 0;
+}
+pre code{background:none;padding:0;color:inherit;font-size:inherit}
+
+ul,ol{margin:0 0 18px;padding-left:24px}
+li{margin-bottom:8px}
+
+footer{
+  border-top:1px solid var(--line);padding:40px 0 64px;
+  font-size:13.5px;color:var(--ink-faint);line-height:1.7;
+}
+footer a{color:var(--accent)}
+
+@media(max-width:600px){
+  body{font-size:16px}
+  header.hero{padding:44px 0 40px;margin-bottom:40px}
+  .stats{grid-template-columns:1fr 1fr}
+  .stat .n{font-size:24px}
+  table{font-size:13.5px}
+  th,td{padding:8px 10px}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Data analysis · Public health</p>
+    <h1>Measles vaccination coverage and reported cases</h1>
+    <p class="sub">A 25-country longitudinal analysis, 2000–2025, built on WHO Global Health Observatory data. Every number reproducible from three scripts.</p>
+    <div class="meta">
+      <div><strong>25 countries</strong>Europe, Americas, Asia, Africa, Oceania</div>
+      <div><strong>26 years</strong>2000 to 2025</div>
+      <div><strong>650 country-years</strong>100% coverage completeness</div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section>
+  <h2>Executive summary</h2>
+  <p class="lead">Coverage has risen in most countries, but the gains are uneven. Higher coverage is associated with fewer cases — yet the association is looser than most reporting suggests, and that looseness is the finding.</p>
+
+  <div class="stats">
+    <div class="stat"><div class="n">21/25</div><div class="l">significant trends</div></div>
+    <div class="stat"><div class="n">+0.40</div><div class="l">median pp/year</div></div>
+    <div class="stat"><div class="n">17.4%</div><div class="l">variance explained</div></div>
+  </div>
+
+  <p><strong>Coverage has risen in most countries.</strong> The median country improved by 0.40 percentage points per year, and 21 of 25 trends are statistically significant. India is the strongest improver at +1.71 pp/year (R² = 0.93, essentially linear). Brazil is the strongest decliner at −0.60 pp/year.</p>
+
+  <p><strong>The 2019 turning point is real but not universal.</strong> Comparing mean coverage before 2019 with the period after, 17 of 25 countries improved and 8 declined. Brazil lost 11.3 percentage points; Ethiopia gained 19.7.</p>
+
+  <p><strong>Higher coverage is associated with fewer cases, but the relationship is loose.</strong> Pooled across all country-years, each additional percentage point of coverage is associated with a 0.036-unit reduction in log10(cases+1), with p &lt; 0.001. However, coverage explains only <strong>17.4% of the variation in case counts</strong>.</p>
+
+  <div class="callout">
+    <p><strong>Why the low R² is the finding, not a failure.</strong> Outbreaks depend on local clustering of susceptible individuals, importation pressure from neighbours, and campaign timing — none of which are in the model. A country can be at 95% nationally and still have a school at 70%. Anyone reporting a much higher R² on this data should be suspected of having leaked the outcome into the predictors.</p>
+  </div>
+
+  <div class="callout warn">
+    <p><strong>A caveat on the data itself.</strong> Reported cases are a function of both true incidence and how aggressively a country looks for cases. A country that tests more will report more. This analysis cannot separate the two.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Data and sources</h2>
+  <p>All data comes from the <strong>WHO Global Health Observatory</strong> (GHO), accessed through its public API. Two indicators:</p>
+  <table>
+    <thead><tr><th>Code</th><th>Indicator</th><th>Unit</th></tr></thead>
+    <tbody>
+      <tr><td><code>WHS8_110</code></td><td>MCV1 coverage among 1-year-olds</td><td>%</td></tr>
+      <tr><td><code>WHS3_62</code></td><td>Measles — number of reported cases</td><td>count</td></tr>
+    </tbody>
+  </table>
+  <p>Twenty-five countries span income levels, population sizes and geographies — 8 in Europe, 4 in the Americas, 6 in Asia, 5 in Africa, 2 in Oceania. This is not a random sample: it is a deliberate spread chosen to give the analysis enough variation to detect a relationship. Findings should not be read as global estimates.</p>
+  <p>The coverage indicator begins in 2000. Case data extends back to 1974, but earlier years have no coverage denominator and were excluded. The window is therefore <strong>2000–2025</strong>.</p>
+</section>
+
+<section>
+  <h2>Method: document, do not impute</h2>
+  <p>Every cleaning decision is recorded in a machine-readable log and a human-readable quality report. The guiding rule: <strong>no value is invented</strong>.</p>
+  <p>Imputing surveillance counts would fabricate data. A missing case count is not a zero — it may mean no cases, or no reporting, or a reporting delay. Treating it as zero would bias every downstream estimate downward. The merge therefore keeps unmatched rows and flags them, so any later analysis can choose its own policy.</p>
+  <pre><code>coverage: 650 raw rows  →  650 clean, 25 countries
+cases:   1173 raw rows  →  618 clean, 25 countries
+merge:   outer join, 32 coverage-only rows kept and flagged</code></pre>
+  <p>The resulting dataset is <strong>650 rows</strong> with <strong>100% coverage completeness</strong> and 618 rows carrying both a coverage value and a case count.</p>
+</section>
+
+<section>
+  <h2>Findings</h2>
+
+  <h3>1. Coverage trends</h3>
+  <figure>
+    <img src="figures/fig1_coverage_trends.png" alt="Line chart: 25 grey country trajectories, a thick green mean line rising from about 80% to 87%, a red line for Brazil falling after 2016, and a green line for India rising steeply from 56% to 97%.">
+    <figcaption>MCV1 coverage, 2000–2025. Grey lines are individual countries; the thick green line is the 25-country mean. India (green) rose from roughly 56% to 97%. Brazil (red) declined from near 99% to about 80%.</figcaption>
+  </figure>
+
+  <p>Across the 25 countries, the median annual change is <strong>+0.40 percentage points</strong>. Twenty-one of 25 trends are statistically significant.</p>
+
+  <p><strong>Steepest rise — India.</strong> +1.71 pp/year (95% CI 1.51 to 1.91), R² = 0.93. India moved from roughly 56% coverage in 2000 to near 97% by 2025, with a near-monotonic trajectory. This is the clearest programme-scale improvement in the sample.</p>
+
+  <p><strong>Steepest fall — Brazil.</strong> −0.60 pp/year (95% CI −0.89 to −0.31), R² = 0.43. Brazil began the period near 99% and declined to roughly 80% before a partial recovery. The low R² reflects the shape: a long plateau, then a sharp drop, then a rebound — a line is a poor description of that path, and the slope should be read as an average rather than a description.</p>
+
+  <h3>2. Reported cases</h3>
+  <figure>
+    <img src="figures/fig2_cases_heatmap.png" alt="Heatmap: 25 countries as rows, years 2000-2025 as columns, colour intensity showing log10 of reported measles cases.">
+    <figcaption>Reported measles cases by country and year, log10 colour scale. A linear scale would render everything except outbreak years invisible.</figcaption>
+  </figure>
+
+  <p>Cases are shown on a log10 scale because the distribution is extremely skewed — a single outbreak year can exceed the sum of a decade of quiet years.</p>
+  <p>Three patterns are visible: <strong>concentration</strong> in a subset of countries; <strong>periodicity</strong>, with outbreak years appearing roughly every 3–5 years in several countries, consistent with accumulation of susceptible children between campaigns; and <strong>recent resurgence</strong> in the 2019–2025 period, including in some high-coverage countries.</p>
+
+  <h3>3. Coverage against cases</h3>
+  <figure>
+    <img src="figures/fig3_coverage_vs_cases.png" alt="Scatter plot: MCV1 coverage on the x-axis, log10 of reported cases on the y-axis, with a downward-sloping red OLS line labelled slope -0.0359, R-squared 0.174.">
+    <figcaption>Pooled scatter of coverage against log10(reported cases + 1), all 618 country-years. The OLS line has slope −0.036 and R² = 0.174.</figcaption>
+  </figure>
+
+  <p>The pooled relationship is negative and highly significant:</p>
+  <pre><code>log10(cases+1) = 4.68 − 0.036 × coverage
+p &lt; 0.001,  R² = 0.174,  n = 618</code></pre>
+  <p>The direction matches vaccination theory. The magnitude is modest: the model explains 17.4% of the variance in case counts.</p>
+
+  <h3>4. The 2019 split</h3>
+  <figure>
+    <img src="figures/fig4_pre_post_2019.png" alt="Scatter plot comparing mean coverage before 2019 against mean coverage after 2019, with a diagonal line of no change. Most countries sit close to the line; Brazil is below it, Ethiopia above.">
+    <figcaption>Mean coverage 2000–2018 against 2019–2025. Points below the diagonal declined; points above improved.</figcaption>
+  </figure>
+
+  <table>
+    <thead><tr><th>Direction</th><th class="num">Countries</th></tr></thead>
+    <tbody>
+      <tr><td>Improved 2019–2025 vs 2000–2018</td><td class="num">17</td></tr>
+      <tr><td>Declined</td><td class="num">8</td></tr>
+    </tbody>
+  </table>
+
+  <p>Largest decline: <strong>Brazil, −11.3 pp</strong>. Largest gain: <strong>Ethiopia, +19.7 pp</strong>. The split does not show a uniform pandemic collapse — most countries continued to improve. In Brazil's case the decline began before 2019, which suggests the drop is not solely pandemic-related.</p>
+</section>
+
+<section>
+  <h2>Implications for planning</h2>
+  <ol>
+    <li><strong>Coverage is a leading indicator, not an outcome.</strong> A national figure of 95% is compatible with a local outbreak. Monitoring that tracks only the national number will be surprised by outbreaks that were visible in the subnational distribution.</li>
+    <li><strong>Surveillance quality is a confounder that cannot be ignored.</strong> Variation in reported cases across countries of similar coverage is partly real epidemiology and partly real differences in testing. Any cross-country comparison should state which it measures.</li>
+    <li><strong>Trend, not level, is the more actionable number.</strong> Brazil at 80% recovering is a different programme problem from a country at 80% and flat.</li>
+    <li><strong>The period after 2019 is heterogeneous.</strong> Planning cannot assume a uniform pandemic effect. The 8 declining countries warrant investigation; the 17 improving ones suggest routine immunisation can be maintained through disruption.</li>
+    <li><strong>Zero reported cases is ambiguous.</strong> A zero can mean elimination or absence of surveillance.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Limitations</h2>
+  <ul>
+    <li><strong>Ecological design.</strong> All analysis is at country-year level. Associations at this level do not transfer to individuals.</li>
+    <li><strong>No causal identification.</strong> No instrument, no natural experiment, no fixed effects. The pooled coefficient is descriptive.</li>
+    <li><strong>Case reporting heterogeneity.</strong> Reported cases conflate incidence with surveillance effort. This is the single largest threat to the coverage–cases interpretation.</li>
+    <li><strong>Purposive country selection.</strong> The 25 countries were chosen for variation, not randomly.</li>
+    <li><strong>National coverage measure.</strong> MCV1 is an administrative estimate, subject to denominator uncertainty. Subnational heterogeneity, which drives outbreaks, is invisible here.</li>
+    <li><strong>Descriptive 2019 split.</strong> It identifies a difference, not a cause.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Reproducibility</h2>
+  <p>Three scripts run in sequence. No manual steps, no hidden state.</p>
+  <pre><code>python 01_fetch.py     # downloads raw JSON from the WHO API
+python 02_clean.py     # cleans, merges, writes decisions log
+python 03_analyse.py   # statistics and figures</code></pre>
+  <p>To verify this claim rather than assert it, I deleted every derived file and figure, then re-ran all three scripts from scratch. All five output files returned with identical byte sizes (CSV 22.9 KB, results 1.2 KB, trends 1.1 KB) and the four figures regenerated.</p>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><strong>Data source:</strong> WHO Global Health Observatory, indicator codes <code>WHS8_110</code> and <code>WHS3_62</code>.<br>
+    <strong>Licence:</strong> CC BY-NC-SA 3.0 IGO. Non-commercial use, attribution required. This analysis is shared under the same terms.</p>
+    <p>Analysis code and text: original work. Built with Python, pandas, statsmodels and matplotlib.</p>
+  </div>
+</footer>
+
+</body>
+</html>
