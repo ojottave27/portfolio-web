@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sustainability Week Zurich 2026</title>
+<meta name="description" content="Browse and save events for Sustainability Week Zurich 2026.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <p class="eyebrow">Sustainability Week Zurich 2026</p>
+    <h1>Sharing the Future</h1>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Main">
+  <div class="wrap tabs-inner">
+    <button class="tab is-active" data-view="programme" aria-current="page">Programme</button>
+    <button class="tab" data-view="myweek">My Week <span class="badge" id="saveCount" hidden>0</span></button>
+  </div>
+</nav>
+
+<main id="main" class="wrap">
+
+  <section id="view-programme" class="view" aria-labelledby="programme-h">
+    <h2 id="programme-h" class="sr-only">Programme</h2>
+
+    <div class="daybar" role="tablist" aria-label="Event days">
+      <div id="dayTabs" class="daytabs"></div>
+    </div>
+
+    <div class="toolbar">
+      <p class="count" id="resultCount" aria-live="polite"></p>
+      <div class="toolbar-actions">
+        <button id="btnFilters" class="btn btn-ghost" aria-haspopup="dialog" aria-expanded="false">
+          Filters <span class="chip-count" id="filterCount" hidden>0</span>
+        </button>
+        <button id="btnClearAll" class="btn btn-ghost" hidden>Clear all</button>
+      </div>
+    </div>
+
+    <div id="activeChips" class="chips" aria-label="Active filters"></div>
+
+    <ul id="eventList" class="event-list"></ul>
+    <p id="emptyProgramme" class="empty" hidden></p>
+  </section>
+
+  <section id="view-myweek" class="view" aria-labelledby="myweek-h" hidden>
+    <h2 id="myweek-h">My Week</h2>
+    <p class="lede">Events you save are kept in this browser only.</p>
+    <div id="myWeekBody"></div>
+  </section>
+
+  <section id="view-details" class="view" aria-labelledby="details-h" hidden>
+    <button id="btnBack" class="btn btn-back">← Back</button>
+    <article id="detailsBody"></article>
+  </section>
+
+</main>
+
+<div id="filterPanel" class="panel" role="dialog" aria-modal="true" aria-labelledby="panel-h" hidden>
+  <div class="panel-inner">
+    <div class="panel-head">
+      <h2 id="panel-h">Filters</h2>
+      <button id="btnPanelClose" class="btn btn-ghost" aria-label="Close filters">Close</button>
+    </div>
+    <div class="panel-body" id="panelBody"></div>
+    <div class="panel-foot">
+      <button id="btnClearDraft" class="btn btn-ghost">Clear</button>
+      <button id="btnShowResults" class="btn btn-primary">Show results</button>
+    </div>
+  </div>
+</div>
+<div id="backdrop" class="backdrop" hidden></div>
+
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Demo build · sample data · <span id="buildStamp"></span></p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
