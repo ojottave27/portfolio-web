@@ -5,28 +5,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>HELIOS — Premium Solar Energy</title>
 <meta name="description" content="Premium solar installations engineered for maximum yield and decades of clean energy.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="./style.css">
-<script type="module" src="./bundle.js"></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/",
+    "gsap": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/index.js",
+    "gsap/ScrollTrigger": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/ScrollTrigger.js"
+  }
+}
+</script>
+<script type="module" src="./form.js"></script>
+<script type="module" src="./main.js"></script>
 </head>
 <body>
+<a class="skip" href="#solutions">Skip to content</a>
 <div class="progress-bar"></div>
-<canvas id="scene"></canvas>
+<canvas id="scene" aria-hidden="true"></canvas>
 <div class="vignette"></div>
 <div class="grain"></div>
 
-<nav>
+<nav aria-label="Main">
   <a class="logo" href="#top">HELIOS</a>
   <div class="links">
     <a href="#solutions">Solutions</a>
     <a href="#why">Why Helios</a>
     <a href="#contact" class="cta">Get a Quote</a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu">Menu</button>
+  </div>
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <a href="#solutions">Solutions</a>
+    <a href="#why">Why Helios</a>
+    <a href="#contact">Get a Quote</a>
   </div>
 </nav>
 
-<div id="scroll-root" class="top" id="top">
-  <section class="hero">
+<div id="scroll-root">
+  <section class="hero" id="top">
     <div class="hero-inner">
       <div class="eyebrow"><span class="dot"></span>Renewable Energy &middot; Est. 2019</div>
       <h1>Power drawn<br>from the <em>sun</em>.</h1>
@@ -36,20 +52,29 @@
         <a href="#solutions" class="btn ghost">Explore Solutions</a>
       </div>
     </div>
-    <div class="scroll-hint"><span>Scroll</span><i></i></div>
+    <div class="scroll-hint" aria-hidden="true"><span>Scroll</span><i></i></div>
   </section>
 
   <section class="marquee" aria-hidden="true">
     <div class="marquee-track">
-      <span class="marquee-item">IEC 61215 Certified</span><i>&middot;</i>
-      <span class="marquee-item">25-Year Performance Warranty</span><i>&middot;</i>
-      <span class="marquee-item">Bifacial Technology</span><i>&middot;</i>
-      <span class="marquee-item">Grid-Tied Storage</span><i>&middot;</i>
-      <span class="marquee-item">Carbon Neutral Install</span><i>&middot;</i>
+      <div class="marquee-group">
+        <span class="marquee-item">IEC 61215 Certified</span><i>&middot;</i>
+        <span class="marquee-item">25-Year Performance Warranty</span><i>&middot;</i>
+        <span class="marquee-item">Bifacial Technology</span><i>&middot;</i>
+        <span class="marquee-item">Grid-Tied Storage</span><i>&middot;</i>
+        <span class="marquee-item">Carbon Neutral Install</span><i>&middot;</i>
+      </div>
+      <div class="marquee-group">
+        <span class="marquee-item">IEC 61215 Certified</span><i>&middot;</i>
+        <span class="marquee-item">25-Year Performance Warranty</span><i>&middot;</i>
+        <span class="marquee-item">Bifacial Technology</span><i>&middot;</i>
+        <span class="marquee-item">Grid-Tied Storage</span><i>&middot;</i>
+        <span class="marquee-item">Carbon Neutral Install</span><i>&middot;</i>
+      </div>
     </div>
   </section>
 
-  <section class="stats">
+  <section class="stats" aria-label="Helios in numbers">
     <div class="stat"><span class="num">12.4<span>MW</span></span><span class="label">Installed capacity</span></div>
     <div class="stat"><span class="num">2,300<span>+</span></span><span class="label">Projects delivered</span></div>
     <div class="stat"><span class="num">99.2<span>%</span></span><span class="label">System uptime</span></div>
@@ -67,19 +92,19 @@
         <div class="card-num">01</div>
         <h3>Residential Arrays</h3>
         <p>Roof-mounted systems designed around your architecture &mdash; invisible wiring, whisper-quiet inverters, full monitoring.</p>
-        <span class="card-link">Explore &rarr;</span>
+        <a class="card-link" href="#contact" data-quote-type="residential">Get a quote<span class="sr-only"> for a residential array</span> &rarr;</a>
       </article>
       <article class="card">
         <div class="card-num">02</div>
         <h3>Commercial Fields</h3>
         <p>Utility-scale ground arrays with bifacial panels, tracker systems and grid-tied storage for maximum return.</p>
-        <span class="card-link">Explore &rarr;</span>
+        <a class="card-link" href="#contact" data-quote-type="commercial">Get a quote<span class="sr-only"> for a commercial field</span> &rarr;</a>
       </article>
       <article class="card">
         <div class="card-num">03</div>
         <h3>Off-Grid Systems</h3>
         <p>Independent power for remote sites &mdash; lithium storage, smart load management, and long-term service contracts.</p>
-        <span class="card-link">Explore &rarr;</span>
+        <a class="card-link" href="#contact" data-quote-type="offgrid">Get a quote<span class="sr-only"> for an off-grid system</span> &rarr;</a>
       </article>
     </div>
   </section>
@@ -92,19 +117,19 @@
       </div>
       <div class="features">
         <div class="feature">
-          <h4>Site-specific modelling</h4>
+          <h3>Site-specific modelling</h3>
           <p>Shading, irradiance and roof geometry simulated before a single panel is ordered.</p>
         </div>
         <div class="feature">
-          <h4>Certified installation</h4>
+          <h3>Certified installation</h3>
           <p>In-house crews, not subcontracted labour. Every install signed off by a licensed engineer.</p>
         </div>
         <div class="feature">
-          <h4>Live monitoring</h4>
+          <h3>Live monitoring</h3>
           <p>Per-panel telemetry with automatic fault alerts and annual yield reporting.</p>
         </div>
         <div class="feature">
-          <h4>End-of-life takeback</h4>
+          <h3>End-of-life takeback</h3>
           <p>Panels collected and recycled at end of service &mdash; no landfill, no cost to you.</p>
         </div>
       </div>
@@ -113,11 +138,90 @@
 
   <section class="cta-section" id="contact">
     <div class="cta-inner">
-      <div class="eyebrow">Start</div>
-      <h2>Let&rsquo;s design your<br>energy future.</h2>
-      <p>Tell us about your site and we&rsquo;ll return a full feasibility study within 48 hours.</p>
-      <a href="#" class="btn primary large">Start a Project</a>
-      <div class="cta-meta">No obligation &middot; Free site assessment &middot; 48h response</div>
+      <div class="cta-copy">
+        <div class="eyebrow">Start</div>
+        <h2>Let&rsquo;s design your<br>energy future.</h2>
+        <p>Tell us about your site and we&rsquo;ll return a full feasibility study within 48 hours.</p>
+        <ul class="cta-points">
+          <li>Free site assessment</li>
+          <li>No obligation</li>
+          <li>Reply within 48 hours</li>
+        </ul>
+      </div>
+
+      <form class="quote" id="quote-form" novalidate>
+        <div class="field-row">
+          <div class="field">
+            <label for="q-name">Full name</label>
+            <input id="q-name" name="name" autocomplete="name" aria-describedby="q-name-err">
+            <p class="err" id="q-name-err"></p>
+          </div>
+          <div class="field">
+            <label for="q-email">Email</label>
+            <input id="q-email" name="email" type="email" autocomplete="email" aria-describedby="q-email-err">
+            <p class="err" id="q-email-err"></p>
+          </div>
+        </div>
+
+        <fieldset class="field">
+          <legend>Kind of site</legend>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="type" value="residential" id="q-type-res" aria-describedby="q-type-err"><span><b>Residential</b>Roof-mounted</span></label>
+            <label class="choice"><input type="radio" name="type" value="commercial" id="q-type-com" aria-describedby="q-type-err"><span><b>Commercial</b>Ground array</span></label>
+            <label class="choice"><input type="radio" name="type" value="offgrid" id="q-type-off" aria-describedby="q-type-err"><span><b>Off-grid</b>Remote site</span></label>
+          </div>
+          <p class="err" id="q-type-err"></p>
+        </fieldset>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="q-postcode">Site postcode</label>
+            <input id="q-postcode" name="postcode" autocomplete="postal-code" aria-describedby="q-postcode-err">
+            <p class="err" id="q-postcode-err"></p>
+          </div>
+          <div class="field">
+            <label for="q-bill">Monthly electricity bill</label>
+            <div class="affix">
+              <span aria-hidden="true">€</span>
+              <input id="q-bill" name="bill" inputmode="decimal" placeholder="140" aria-describedby="q-bill-hint q-bill-err">
+            </div>
+            <p class="hint" id="q-bill-hint">Average over the last year. We use it to size the system.</p>
+            <p class="err" id="q-bill-err"></p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="q-notes">Anything we should know? <span class="opt">Optional</span></label>
+          <textarea id="q-notes" name="notes" rows="3" placeholder="Roof orientation, shading, a planned EV charger…"></textarea>
+        </div>
+
+        <div class="field">
+          <label class="check" for="q-consent">
+            <input type="checkbox" id="q-consent" name="consent" aria-describedby="q-consent-err">
+            <span>Helios may contact me about this request. We never share your details.</span>
+          </label>
+          <p class="err" id="q-consent-err"></p>
+        </div>
+
+        <div class="submit-row">
+          <button class="btn primary large" type="submit">Request feasibility study</button>
+          <p class="demo-note">Demo form: nothing is sent or stored.</p>
+        </div>
+      </form>
+
+      <div class="quote quote-done" id="quote-done" tabindex="-1" hidden>
+        <div class="eyebrow"><span class="dot"></span>Request ready</div>
+        <h3 data-out="greeting">Thanks.</h3>
+        <p>An engineer would review your site and send the feasibility study to <strong data-out="email"></strong> within 48 hours.</p>
+        <dl class="summary">
+          <div><dt>Reference</dt><dd data-out="reference"></dd></div>
+          <div><dt>Site</dt><dd data-out="type"></dd></div>
+          <div><dt>Postcode</dt><dd data-out="postcode"></dd></div>
+          <div><dt>Current bill</dt><dd data-out="bill"></dd></div>
+        </dl>
+        <p class="demo-note">This is a demo, so nothing was sent. On a live site this request would reach the Helios engineering team.</p>
+        <button class="btn ghost again" type="button">Start another request</button>
+      </div>
     </div>
   </section>
 
@@ -126,13 +230,13 @@
       <div class="logo">HELIOS</div>
       <div class="foot-cols">
         <div>
-          <h5>Solutions</h5>
+          <h2>Solutions</h2>
           <a href="#solutions">Residential</a>
           <a href="#solutions">Commercial</a>
           <a href="#solutions">Off-Grid</a>
         </div>
         <div>
-          <h5>Company</h5>
+          <h2>Company</h2>
           <a href="#why">About</a>
           <a href="#contact">Contact</a>
         </div>
@@ -144,7 +248,5 @@
     </div>
   </footer>
 </div>
-
-
 </body>
 </html>
