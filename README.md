@@ -7,3 +7,4 @@ Demos de desenvolvimento web.
 - [Marlowe Booking](marlowe-booking/) — sistema de reservas
 - [H Studio](hstudio/) — site + painel admin
 - [Sustainability Week Zurich](nhwz-planner/) — planner de eventos com testes automáticos
+- [Noor Halvorsen](noor-portfolio/) — portfólio front-end responsivo
