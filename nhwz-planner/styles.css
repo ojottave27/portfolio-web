@@ -14,7 +14,7 @@ body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Ar
 .skip{position:absolute;left:-9999px;top:0;background:var(--gold);color:var(--ink);padding:12px 20px;z-index:100;font-weight:700}
 .skip:focus{left:8px;top:8px}
 .site-header{background:var(--green);color:var(--white);padding:22px 0 26px}
-.eyebrow{margin:0 0 4px;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.eyebrow{margin:0 0 4px;font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-soft);font-weight:700}
 .site-header h1{margin:0;font-size:1.5rem;line-height:1.15;letter-spacing:-.01em;color:var(--gold);font-weight:800}
 .tabs{background:var(--green-deep);position:sticky;top:0;z-index:20}
 .tabs-inner{display:flex;gap:4px}
