@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relatório de QA de sites — Jotave</title>
+<meta name="description" content="Relatório de QA com a marca da sua agência: erros, celular, iPhone e Firefox, acessibilidade, velocidade, SEO e rastreadores antes do consentimento, com prints e tempo de correção.">
+<meta name="theme-color" content="#faf5ee">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+/* Warm paper and terracotta: a report you would put on a client's desk */
+:root{
+  --paper:#faf5ee; --paper-2:#f2e8db; --card:#fffdf9; --line:#e6d9c8;
+  --ink:#2b211b; --ink-soft:#5c4d42;
+  --clay:#b04a2c; --clay-text:#9a3f24; --clay-soft:#f6dfd4;
+  --ochre:#c98a2b; --sage:#4f6343; --sage-soft:#e3e8d9;
+  --serif:'Fraunces',Georgia,serif; --sans:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --shadow:0 1px 0 rgba(255,255,255,.7) inset, 0 22px 44px -32px rgba(74,44,24,.45);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(55% 45% at 92% 0%,rgba(201,138,43,.14),transparent 70%),
+             radial-gradient(40% 40% at 0% 35%,rgba(79,99,67,.08),transparent 70%)}
+a{color:inherit}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--clay);outline-offset:3px;border-radius:6px}
+img{display:block;max-width:100%;height:auto}
+.wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.02em;font-optical-sizing:auto}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:20;background:rgba(250,245,238,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:70px}
+.brand{text-decoration:none;font-family:var(--serif);font-weight:600;font-size:21px;line-height:1.1}
+.brand small{display:block;font-family:var(--sans);font-size:12px;font-weight:500;color:var(--ink-soft);letter-spacing:.02em}
+.links{display:flex;align-items:center;gap:24px;font-size:15px}
+.links a{text-decoration:none;color:var(--ink-soft)}
+.links a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:600;font-size:15.5px;padding:12px 24px;border-radius:999px;border:1.5px solid transparent;transition:transform .2s,background .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--clay);color:#fff}
+.btn-primary:hover{background:#963d23}
+.btn-ghost{border-color:var(--ink);color:var(--ink)}
+.links a.btn-primary{color:#fff}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:center;padding:76px 0 84px}
+.kicker{display:inline-block;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--sage);background:var(--sage-soft);padding:6px 12px;border-radius:999px;margin-bottom:22px}
+h1{font-size:clamp(40px,5.2vw,64px);line-height:1.02;text-wrap:balance}
+h1 em{font-style:italic;font-weight:500;color:var(--clay-text)}
+.lede{font-size:19px;color:var(--ink-soft);margin:22px 0 30px;max-width:31em}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+.trust{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:30px;font-size:14px;color:var(--ink-soft)}
+.trust span::before{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ochre);margin-right:8px;vertical-align:middle}
+
+/* report sheets on the desk */
+.desk{position:relative;min-height:520px}
+.sheet{position:absolute;width:62%;border-radius:6px;background:#fff;border:1px solid var(--line);box-shadow:0 30px 60px -30px rgba(74,44,24,.5)}
+.sheet.back{left:4%;top:6%;transform:rotate(-6deg);opacity:.95}
+.sheet.page{left:30%;top:0;transform:rotate(3deg)}
+.polaroid{position:absolute;left:0;bottom:2%;width:58%;background:#fff;padding:10px 10px 34px;border-radius:4px;transform:rotate(-3deg);box-shadow:0 26px 50px -26px rgba(74,44,24,.6)}
+.polaroid img{border-radius:2px}
+.polaroid::before{content:'';position:absolute;top:-12px;left:42%;width:70px;height:24px;background:rgba(201,138,43,.38);transform:rotate(4deg)}
+.polaroid p{position:absolute;left:14px;right:10px;bottom:8px;font-family:var(--serif);font-style:italic;font-size:14px;color:var(--clay-text)}
+
+/* sections */
+section{padding:72px 0}
+.band{background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+h2{font-size:clamp(30px,3.4vw,42px);line-height:1.1;margin-bottom:12px}
+.sub{color:var(--ink-soft);max-width:40em;margin-bottom:34px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow)}
+.card b{display:block;font-family:var(--serif);font-weight:600;font-size:19px;margin-bottom:6px}
+.card span{font-size:15px;color:var(--ink-soft)}
+.grid .card::before{content:'';display:block;width:30px;height:4px;border-radius:4px;background:var(--ochre);margin-bottom:16px}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;counter-reset:s}
+.steps .card::before{counter-increment:s;content:counter(s);display:block;font-family:var(--serif);font-size:44px;font-weight:500;line-height:1;color:var(--clay-text);margin-bottom:14px}
+.samples{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.sample{display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);transition:transform .25s}
+.sample:hover{transform:translateY(-4px) rotate(-.6deg)}
+.sample img{aspect-ratio:4/5;object-fit:cover;object-position:top;border-bottom:1px solid var(--line)}
+.sample div{padding:16px 18px}
+.sample b{display:block;font-family:var(--serif);font-weight:600;font-size:18px}
+.sample span{font-size:14px;color:var(--ink-soft)}
+.tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:start}
+.tier{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:var(--shadow)}
+.tier.hot{border:2px solid var(--clay);background:linear-gradient(180deg,var(--clay-soft),var(--card) 46%)}
+.tier .name{font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--sage)}
+.tier .price{font-family:var(--serif);font-size:38px;font-weight:600;letter-spacing:-.02em;margin:8px 0 2px}
+.tier .when{font-size:14px;color:var(--ink-soft);margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed var(--line)}
+.tier ul{list-style:none;display:grid;gap:9px;font-size:15.5px}
+.tier li{display:flex;gap:10px}
+.tier li::before{content:'✓';color:var(--clay-text);font-weight:700}
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:12px}
+summary{cursor:pointer;font-family:var(--serif);font-weight:600;font-size:18px;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:'+';color:var(--clay-text);font-family:var(--sans);font-weight:600}
+details[open] summary::after{content:'–'}
+details p{color:var(--ink-soft);margin-top:10px}
+.note{font-size:14px;color:var(--ink-soft);border-top:1px solid var(--line);padding:26px 0 52px}
+
+@media (max-width:900px){
+  .hero{grid-template-columns:minmax(0,1fr);padding-top:48px;gap:40px}
+  .desk{min-height:0;aspect-ratio:1/1;max-width:520px;width:100%;margin:0 auto}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .steps,.samples,.tiers{grid-template-columns:minmax(0,1fr)}
+  .links a:not(.btn){display:none}
+}
+@media (max-width:480px){
+  .grid{grid-template-columns:minmax(0,1fr)}
+  .btn{padding:11px 18px}
+}
+@media (prefers-reduced-motion:reduce){.btn,.sample{transition:none}.sample:hover,.btn:hover{transform:none}}
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="../">Jotave<small>Relatório de QA de sites</small></a>
+    <nav class="links" aria-label="Page">
+      <a href="#checks">O que é verificado</a>
+      <a href="#samples">Exemplos</a>
+      <a href="#pricing">Preços</a>
+      <a href="index.html" hreflang="en" lang="en">English</a>
+      <a class="btn btn-primary" href="https://www.fiverr.com/jotave_devex">Pedir pela Fiverr</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <div>
+      <p class="kicker">Para agências e donos de sites</p>
+      <h1>Ache o que está quebrado <em>antes do seu cliente</em>.</h1>
+      <p class="lede">Um relatório de QA em linguagem simples, com o nome da sua agência: cada problema com print, prioridade, como corrigir e quanto tempo leva.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#samples">Ver um relatório de exemplo</a>
+        <a class="btn btn-ghost" href="#pricing">Preços</a>
+      </div>
+      <div class="trust"><span>3 tamanhos de tela</span><span>iPhone e Firefox</span><span>WCAG 2.1</span><span>Relatório em 48 h</span></div>
+    </div>
+    <div class="desk" aria-hidden="true">
+      <img class="sheet back" src="img/cover-helios.jpg" alt="" width="794" height="1123">
+      <img class="sheet page" src="img/cover-pt.jpg" alt="" width="794" height="1123">
+      <figure class="polaroid"><img src="img/evidence.jpg" alt="" width="977" height="772"><p>Contraste 4,45:1, abaixo do mínimo de 4,5:1</p></figure>
+    </div>
+  </div>
+
+  <section id="checks" class="band">
+    <div class="wrap">
+      <h2>O que todo relatório verifica</h2>
+      <p class="sub">Cada página é aberta num navegador real, como o visitante vê, na largura de celular, tablet e computador.</p>
+      <div class="grid">
+        <div class="card"><b>Erros</b><span>Erros de JavaScript, arquivos que faltam e páginas que não abrem.</span></div>
+        <div class="card"><b>Celular</b><span>Rolagem lateral e layout quebrado em 375, 768 e 1280 px.</span></div>
+        <div class="card"><b>iPhone e Firefox</b><span>Problemas que só aparecem no motor do Safari ou no Firefox.</span></div>
+        <div class="card"><b>Acessibilidade</b><span>Contraste, rótulos, texto alternativo e mais (WCAG 2.1 A/AA), com o elemento marcado.</span></div>
+        <div class="card"><b>Velocidade</b><span>Maior elemento visível e deslocamento de layout, medidos três vezes; peso da página.</span></div>
+        <div class="card"><b>SEO básico</b><span>Títulos, descrições, duplicados, noindex, redirecionamentos e links quebrados.</span></div>
+        <div class="card"><b>Privacidade</b><span>Rastreadores e cookies que carregam antes do consentimento do visitante (LGPD).</span></div>
+        <div class="card"><b>Resumo</b><span>Uma página em linguagem de negócio, com o tempo total de correção.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Como funciona</h2>
+      <div class="steps">
+        <div class="card"><b>Envie o endereço</b><span>O site ou o ambiente de homologação, e a confirmação de que você pode autorizar o teste.</span></div>
+        <div class="card"><b>O site é testado</b><span>Até 10 páginas (ou 30), três tamanhos de tela, iPhone e Firefox. Nada é enviado nem alterado.</span></div>
+        <div class="card"><b>Você recebe o PDF</b><span>Em até 48 horas, com o nome e a cor da sua agência, pronto para mandar ao cliente.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="samples" class="band">
+    <div class="wrap">
+      <h2>Relatórios de exemplo</h2>
+      <p class="sub">Relatórios reais, rodados em sites de demonstração que eu construí. O da loja mostra achados reais, inclusive um problema de contraste no meu próprio design.</p>
+      <div class="samples">
+        <a class="sample" href="reports/qa-report-store-en.pdf"><img src="img/cover-en.jpg" alt="Primeira página do relatório de exemplo em inglês" width="794" height="1123" loading="lazy"><div><b>Loja virtual · inglês</b><span>Achados com prints, tempos de correção e próximos passos</span></div></a>
+        <a class="sample" href="reports/relatorio-loja-pt.pdf"><img src="img/cover-pt.jpg" alt="Primeira página do relatório de exemplo em português" width="794" height="1123" loading="lazy"><div><b>Loja virtual · português</b><span>O mesmo relatório em português</span></div></a>
+        <a class="sample" href="reports/relatorio-helios-pt.pdf"><img src="img/cover-helios.jpg" alt="Primeira página do relatório de um site aprovado" width="794" height="1123" loading="lazy"><div><b>Site 3D · aprovado</b><span>Como fica um resultado limpo</span></div></a>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="wrap">
+      <h2>Preços</h2>
+      <p class="sub">Por site. Lojas virtuais podem incluir o teste do checkout, orçado à parte.</p>
+      <div class="tiers">
+        <div class="tier"><div class="name">Diagnóstico</div><div class="price">R$ 290</div><div class="when">Relatório em 48 horas</div>
+          <ul><li>Até 10 páginas</li><li>Celular, tablet, computador, iPhone, Firefox</li><li>Prioridades, prints, tempos de correção</li><li>Com o nome da sua agência</li></ul></div>
+        <div class="tier hot"><div class="name">Correção</div><div class="price">a partir de R$ 490</div><div class="when">Orçado por item, depois do relatório</div>
+          <ul><li>Itens críticos e altos corrigidos</li><li>Novo relatório depois das correções</li><li>Nada muda sem a sua aprovação</li></ul></div>
+        <div class="tier"><div class="name">Monitoramento</div><div class="price">R$ 149 / mês</div><div class="when">Cancele quando quiser</div>
+          <ul><li>Verificação automática toda semana</li><li>Aviso quando algo quebrar</li><li>Relatório mensal</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <h2>Perguntas</h2>
+      <details><summary>Você precisa de acesso ao site?</summary><p>Não. Só o endereço público ou de homologação. Páginas com login aparecem como "exige login"; envie uma conta de teste se elas devem entrar.</p></details>
+      <details><summary>É um laudo legal de acessibilidade ou de LGPD?</summary><p>Não. Verificações automáticas encontram muitos problemas, não todos, e o relatório diz isso. É um relatório técnico para agir, não um parecer jurídico.</p></details>
+      <details><summary>Posso mandar ao cliente como da minha agência?</summary><p>Sim. O relatório leva o nome e a cor da sua agência e não me menciona.</p></details>
+      <details><summary>Quais plataformas?</summary><p>Qualquer site que um navegador abre: WordPress, WooCommerce, Shopify, Wix, Webflow ou feito à mão. As correções dependem de acesso ao código ou ao CMS.</p></details>
+      <details><summary>E se o site bloquear verificações automáticas?</summary><p>O relatório diz isso em vez de adivinhar. Libere a verificação durante a auditoria e ela roda de novo.</p></details>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap note">Os relatórios de exemplo foram rodados em sites de demonstração que eu construí (HELIOS e a loja Marlowe Studio). Marcas e produtos são fictícios. © 2026 Jotave</footer>
+</body>
+</html>
