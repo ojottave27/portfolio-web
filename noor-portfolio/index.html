@@ -11,14 +11,15 @@
 <style>
 /* Layout: color-block bento. A loud typographic hero, a calm about strip, then projects as bright "browser window" swatches on a dotted canvas. */
 :root {
-  --bg: #F5F6FA;
-  --surface: #FFFFFF;
-  --fg: #14151C;
-  --muted: #555A70;
-  --line: #14151C;
-  --shadow: #14151C;
-  --dot: #D3D6E3;
-  --code: #C2361A;
+  color-scheme: dark;
+  --bg: #12131A;
+  --surface: #1C1E28;
+  --fg: #F1F2F7;
+  --muted: #A6AAC0;
+  --line: #F1F2F7;
+  --shadow: #5A5F80;
+  --dot: #262938;
+  --code: #FF8A6B;
   /* constant on every theme: the swatches and the ink printed on them */
   --ink: #14151C;
   --paper: #FFFFFF;
@@ -32,21 +33,7 @@
   --body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #12131A; --surface: #1C1E28; --fg: #F1F2F7; --muted: #A6AAC0;
-    --line: #F1F2F7; --shadow: #5A5F80; --dot: #262938; --code: #FF8A6B;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #12131A; --surface: #1C1E28; --fg: #F1F2F7; --muted: #A6AAC0;
-  --line: #F1F2F7; --shadow: #5A5F80; --dot: #262938; --code: #FF8A6B;
-  color-scheme: dark;
-}
-
 *, *::before, *::after { box-sizing: border-box; }
-html { color-scheme: light; }
 img, svg { max-width: 100%; }
 body {
   margin: 0;

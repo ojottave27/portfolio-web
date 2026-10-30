@@ -76,7 +76,7 @@ nav{
   position:fixed;top:0;left:0;right:0;z-index:30;
   display:flex;justify-content:space-between;align-items:center;
   padding:24px 48px;
-  background:linear-gradient(180deg,rgba(243,241,236,.7) 0%,rgba(243,241,236,.3) 62%,rgba(243,241,236,0) 100%);
+  background:linear-gradient(180deg,rgba(243,241,236,.7) 0%,rgba(243,241,236,.3) 62%,rgba(243,241,236,0) 100%) no-repeat;
   transition:padding .35s ease,background-color .35s ease,border-color .35s ease;
   border-bottom:1px solid transparent;
 }

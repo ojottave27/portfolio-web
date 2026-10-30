@@ -615,14 +615,62 @@ export function startScene(canvas, { reduceMotion = false } = {}) {
   scene.add(hw.pole, hw.head, hw.beam);
   const trackerAngles = TRACKERS.map(() => ({ yaw: 0, tilt: rad(30) }));
 
-  // cable from the field to the inverter and on into the house, with energy pulses running along it
-  const cablePath = new THREE.CatmullRomCurve3([
-    [28, -3], [14, -3.4], [2, -3.4], [-2.2, -3.8], [-4.2, -5.2], [-5.0, -5.6], [-7.6, -6.4],
-  ].map(([x, z]) => new THREE.Vector3(x, 0.16, z)));
-  const cable = new THREE.Mesh(new THREE.TubeGeometry(cablePath, 160, 0.045, 6), std(0x55585e, 0.7));
+  // wiring: each tracker drops a cable down its pole into a junction box, the cables run in a
+  // ground tray to a combiner cabinet, and one feeder goes on to the inverter and into the house
+  const COMBINER = new THREE.Vector3(-1.5, 0, -8.5);
+  const TRAY_Y = 0.2;
+  const polyline = (points) => {
+    const path = new THREE.CurvePath();
+    for (let i = 1; i < points.length; i++) {
+      path.add(new THREE.LineCurve3(new THREE.Vector3(...points[i - 1]), new THREE.Vector3(...points[i])));
+    }
+    return path;
+  };
+  const cablePaths = TRACKERS.map(([x, z], t) => {
+    const lane = z + ((t % 3) - 1) * 0.1; // three cables side by side in each tray
+    const side = z > COMBINER.z ? 0.45 : -0.45; // enter the cabinet on the face toward its row
+    return polyline([
+      [x - 0.3, TRACKER_H - 0.15, z], [x - 0.3, TRAY_Y, z], [x - 0.3, TRAY_Y, lane],
+      [COMBINER.x + (t % 3 - 1) * 0.1, TRAY_Y, lane], [COMBINER.x + (t % 3 - 1) * 0.1, TRAY_Y, COMBINER.z + side],
+    ]);
+  });
+  cablePaths.push(polyline([
+    [COMBINER.x - 0.32, 0.5, COMBINER.z], [-2.1, TRAY_Y, COMBINER.z], [-3.3, TRAY_Y, COMBINER.z], [-3.3, TRAY_Y, -5.4],
+    [-3.72, TRAY_Y, -5.4], [-3.88, 0.3, -5.4], [-4.6, 0.3, -5.4], // up onto the storage pad
+    [-5.12, 0.7, -5.4], // inverter, east face
+    [-5.68, 0.7, -5.4], [-6.3, 0.3, -5.4], [-6.9, 0.3, -6.0], [-7.48, 0.9, -6.0], // into the house wall
+  ]));
+  const cableGeos = cablePaths.map((path) => new THREE.TubeGeometry(path, Math.ceil(path.getLength() * 4), 0.04, 6));
+  const cable = new THREE.Mesh(mergeGeometries(cableGeos), std(0x3f4247, 0.7));
   cable.receiveShadow = true;
   scene.add(cable);
-  const PULSES = 48;
+
+  // junction box on every pole, the ground trays and the combiner cabinet
+  const greyBox = std(0x9aa1ab, 0.5, 0.3);
+  const boxGeos = TRACKERS.map(([x, z]) => new THREE.BoxGeometry(0.16, 0.5, 0.38).translate(x - 0.3, 1.1, z));
+  const trayGeos = [...new Set(TRACKERS.map(([, z]) => z))].map((z) => {
+    const east = Math.max(...TRACKERS.filter(([, tz]) => tz === z).map(([x]) => x));
+    return new THREE.BoxGeometry(east - COMBINER.x + 0.4, 0.12, 0.42).translate((east + COMBINER.x) / 2 - 0.1, 0.09, z);
+  });
+  const zs = TRACKERS.map(([, z]) => z);
+  trayGeos.push(new THREE.BoxGeometry(0.42, 0.12, Math.max(...zs) - Math.min(...zs)).translate(COMBINER.x, 0.09, (Math.max(...zs) + Math.min(...zs)) / 2));
+  const wiringBoxes = new THREE.Mesh(mergeGeometries([
+    ...boxGeos,
+    new THREE.BoxGeometry(0.62, 1.3, 0.9).translate(COMBINER.x, 0.65, COMBINER.z),
+  ]), greyBox);
+  wiringBoxes.castShadow = true;
+  wiringBoxes.receiveShadow = true;
+  const trays = new THREE.Mesh(mergeGeometries(trayGeos), std(0x8d877b, 0.95));
+  trays.receiveShadow = true;
+  scene.add(wiringBoxes, trays);
+
+  // energy pulses run along every cable, one every PULSE_GAP units
+  const PULSE_GAP = 2.4;
+  const pulseRuns = cablePaths.map((path) => {
+    const length = path.getLength();
+    return { path, length, count: Math.max(2, Math.floor(length / PULSE_GAP)) };
+  });
+  const PULSES = pulseRuns.reduce((sum, run) => sum + run.count, 0);
   const pulseMat = new THREE.MeshBasicMaterial({ color: 0xffc04d, toneMapped: false, fog: false });
   const pulses = new THREE.InstancedMesh(new THREE.SphereGeometry(0.085, 10, 8), pulseMat, PULSES);
   pulses.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
@@ -630,7 +678,7 @@ export function startScene(canvas, { reduceMotion = false } = {}) {
   scene.add(pulses);
 
   const fogged = [
-    ground.material, gravel.material, ...ridgeSet.materials, cable.material, hw.material,
+    ground.material, gravel.material, ...ridgeSet.materials, cable.material, greyBox, trays.material, hw.material,
     house.glass, ...treeSet.materials, ...Object.values(parts.material),
   ];
   for (const object of [house.group, storage.group]) {
@@ -738,13 +786,16 @@ export function startScene(canvas, { reduceMotion = false } = {}) {
   let flow = 0;
   function updatePulses(dt) {
     // more sun, more current
-    flow = (flow + dt * (0.03 + 0.05 * Math.max(0, sunDir.y))) % 1;
-    for (let i = 0; i < PULSES; i++) {
-      const u = (i / PULSES + flow) % 1;
-      cablePath.getPointAt(u, pulseP);
-      const fade = smoothstep(0, 0.04, u) * (1 - smoothstep(0.96, 1, u));
-      pulseM.makeScale(fade, fade, fade).setPosition(pulseP);
-      pulses.setMatrixAt(i, pulseM);
+    flow = (flow + dt * (1.2 + 2.2 * Math.max(0, sunDir.y))) % (PULSE_GAP * 1000);
+    let i = 0;
+    for (const run of pulseRuns) {
+      for (let k = 0; k < run.count; k++, i++) {
+        const u = (((k * run.length) / run.count + flow) % run.length) / run.length;
+        run.path.getPointAt(u, pulseP);
+        const fade = smoothstep(0, 0.03, u) * (1 - smoothstep(0.97, 1, u));
+        pulseM.makeScale(fade, fade, fade).setPosition(pulseP);
+        pulses.setMatrixAt(i, pulseM);
+      }
     }
     pulses.instanceMatrix.needsUpdate = true;
     const blink = 0.55 + 0.45 * Math.sin(performance.now() * 0.004);
