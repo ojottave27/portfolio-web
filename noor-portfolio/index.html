@@ -80,13 +80,16 @@ p { margin: 0; }
 main { display: flex; flex-direction: column; gap: clamp(72px, 10vw, 128px); }
 
 /* Hero */
-.hero { padding-block: clamp(36px, 7vw, 88px) 0; display: flex; flex-direction: column; gap: 28px; }
+.hero { padding-block: clamp(36px, 7vw, 88px) 0; display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.9fr); gap: 24px; align-items: center; }
+.hero-copy { display: flex; flex-direction: column; gap: 28px; min-width: 0; }
+.hero-3d { aspect-ratio: 1 / 1; width: 100%; min-width: 0; }
+.hero-3d canvas { display: block; width: 100%; height: 100%; }
 .tag { font: 400 0.92rem/1.5 var(--mono); color: var(--fg); overflow-wrap: anywhere; }
 .tag .p { color: var(--muted); }
 .tag .v { color: var(--code); }
 h1 {
   font-family: var(--display); font-weight: 800;
-  font-size: clamp(2.7rem, 7.6vw, 6.1rem); line-height: 0.98; letter-spacing: -0.035em;
+  font-size: clamp(2.7rem, 6.2vw, 5.4rem); line-height: 0.98; letter-spacing: -0.035em;
   max-width: 15ch;
 }
 .hl {
@@ -209,6 +212,8 @@ footer .wrap {
   .s4 { grid-column: span 2; }
   .s3, .s2 { grid-column: span 1; }
   .about-grid { grid-template-columns: minmax(0, 1fr); }
+  .hero { grid-template-columns: minmax(0, 1fr); }
+  .hero-3d { aspect-ratio: auto; height: 300px; }
 }
 @media (max-width: 620px) {
   .grid { grid-template-columns: minmax(0, 1fr); }
@@ -224,6 +229,15 @@ footer .wrap {
   .card:hover, .btn:hover { transform: none; }
 }
 </style>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="./hero3d.js"></script>
 </head>
 <body>
 <header class="top wrap">
@@ -237,6 +251,7 @@ footer .wrap {
 
 <main id="top">
   <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero-copy">
     <p class="tag"><span class="p">&lt;</span>noor <span class="a">role</span>=<span class="v">"front-end developer"</span> <span class="a">city</span>=<span class="v">"Oslo"</span><span class="p"> /&gt;</span></p>
     <h1 id="hero-title">I build <span class="hl" style="--c: var(--sun)">fast</span>, <span class="hl" style="--c: var(--mint)">friendly</span> websites people <span class="hl" style="--c: var(--pink)">enjoy</span> using.</h1>
     <p class="lede">Hi, I'm <strong>Noor Halvorsen</strong>. For nine years I've helped small studios, shops and public services ship web apps that load quickly, work for everyone, and still feel a little playful.</p>
@@ -244,6 +259,8 @@ footer .wrap {
       <a class="btn" href="#work">See selected work <span class="arr" aria-hidden="true">↓</span></a>
       <a class="btn ghost" href="#about">About me</a>
     </div>
+    </div>
+    <div class="hero-3d" aria-hidden="true"><canvas></canvas></div>
   </section>
 
   <section id="about" class="about wrap" aria-labelledby="about-title">
