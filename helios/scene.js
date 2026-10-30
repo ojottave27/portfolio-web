@@ -63,13 +63,19 @@ const skyFunction = /* glsl */ `
     for (int i = 0; i < 5; i++) { v += a * hsNoise(p); p *= 2.03; a *= 0.5; }
     return v;
   }
-  vec3 heliosSky(vec3 dir) {
+  // gradient, haze and sun glow: cheap enough for every fogged pixel
+  vec3 heliosSkyBase(vec3 dir) {
     float h = dir.y;
     float s = max(dot(dir, sunDir), 0.0);
     vec3 col = mix(horizon, zenith, pow(clamp(h, 0.0, 1.0), 0.55));
     // haze below the horizon, so the far ground fades instead of ending
     col = mix(col, horizon * 0.93, smoothstep(0.0, -0.3, h));
-    col += sunColor * (pow(s, 6.0) * 0.16 + pow(s, 64.0) * 0.32);
+    return col + sunColor * (pow(s, 6.0) * 0.16 + pow(s, 64.0) * 0.32);
+  }
+  vec3 heliosSky(vec3 dir) {
+    float h = dir.y;
+    float s = max(dot(dir, sunDir), 0.0);
+    vec3 col = heliosSkyBase(dir);
     if (h > 0.0) {
       // drifting cumulus, projected onto a plane above the site
       vec2 p = dir.xz / (h + 0.12) * 1.25 + vec2(skyTime * 0.012, skyTime * 0.004);
@@ -115,7 +121,9 @@ function applySkyFog(material, uniforms) {
       .replace('#include <fog_fragment>', /* glsl */ `
         #ifdef USE_FOG
           float fogFactor = 1.0 - exp(-fogDensity * fogDensity * vFogDepth * vFogDepth);
-          vec3 skyFog = heliosSky(normalize(vSkyDir));
+          // fogged geometry sits at or below the horizon, where the clouds have faded out,
+          // so the fog skips their noise: it would otherwise run on every pixel of the ground
+          vec3 skyFog = heliosSkyBase(normalize(vSkyDir));
           #ifdef TONE_MAPPING
             skyFog = toneMapping(skyFog);
           #endif
