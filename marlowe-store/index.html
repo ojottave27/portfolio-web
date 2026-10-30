@@ -1,94 +1,115 @@
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Marlowe Studio — Loja WooCommerce</title>
+<title>Marlowe Studio — WooCommerce store case study</title>
+<meta name="description" content="Case study: a dancewear store on WordPress and WooCommerce with a custom Storefront child theme, a sales homepage and a tested checkout.">
+<meta name="theme-color" content="#0b0f1a">
 <style>
-@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('../fonts/inter-400.woff2') format('woff2')}
-@font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url('../fonts/inter-500.woff2') format('woff2')}
-@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url('../fonts/inter-600.woff2') format('woff2')}
-@font-face{font-family:'Playfair Display';font-style:normal;font-weight:400;font-display:swap;src:url('../fonts/playfair-400.woff2') format('woff2')}
-@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400;font-display:swap;src:url('../fonts/playfair-400.woff2') format('woff2')}
-:root{--bg:#0a0b0f;--surface:#12141b;--ink:#f2f0eb;--muted:#8b8f9c;--amber:#f5a623;--line:rgba(255,255,255,.08);--serif:'Playfair Display',Georgia,serif;--sans:'Inter',system-ui,sans-serif}
+@font-face{font-family:'Inter';font-weight:400;font-display:swap;src:url('../fonts/inter-400.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-weight:500;font-display:swap;src:url('../fonts/inter-500.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-weight:600;font-display:swap;src:url('../fonts/inter-600.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-weight:700;font-display:swap;src:url('../fonts/inter-700.woff2') format('woff2')}
+/* same brand as the portfolio index */
+:root{--bg:#0b0f1a;--surface:#121a2c;--ink:#eef1f6;--muted:#a2abbd;--muted-2:#8790a3;--mint:#5eead4;--amber:#f2a65a;--line:rgba(238,241,246,.09);--sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;--mono:ui-monospace,'Cascadia Code','Consolas',monospace}
 *{margin:0;padding:0;box-sizing:border-box}
+html{color-scheme:dark}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased}
-.wrap{max-width:1080px;margin:0 auto;padding:56px 28px 96px}
-a.back{color:var(--muted);text-decoration:none;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;display:inline-block;margin-bottom:48px}
-a.back:hover{color:var(--ink)}
-.eyebrow{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--amber);font-weight:600;margin-bottom:20px}
-h1{font-family:var(--serif);font-weight:400;font-size:clamp(34px,5vw,56px);line-height:1.05;letter-spacing:-.02em;margin-bottom:20px}
-.lede{font-size:16.5px;line-height:1.72;color:var(--muted);max-width:600px;margin-bottom:40px}
-.cta{display:inline-flex;align-items:center;gap:10px;background:var(--amber);color:#0b0b0d;font-weight:600;font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:15px 28px;border-radius:2px;text-decoration:none;transition:transform .3s,background .3s}
-.cta:hover{transform:translateY(-2px);background:#ffc76b}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:52px 0 0}
-.stat{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:22px}
-.stat .n{font-family:var(--serif);font-size:30px;color:var(--amber);line-height:1}
-.stat .l{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:9px}
-h2{font-family:var(--serif);font-weight:400;font-size:24px;margin:60px 0 20px}
-figure{margin:0 0 22px;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--surface)}
-figure img{display:block;width:100%;height:auto}
-figcaption{padding:14px 18px;font-size:12.5px;color:var(--muted);border-top:1px solid var(--line)}
-figcaption b{color:var(--ink);font-weight:500}
-ul{list-style:none}
-li{padding:11px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:14.5px;color:var(--muted);display:flex;gap:14px}
-li b{color:var(--ink);font-weight:500;min-width:145px;flex-shrink:0}
-.note{background:rgba(245,166,35,.06);border-left:2px solid var(--amber);padding:20px 22px;margin-top:48px;font-size:14px;line-height:1.68;color:var(--muted)}
+a{color:inherit}
+a:focus-visible{outline:2px solid var(--mint);outline-offset:3px;border-radius:6px}
+img{display:block;max-width:100%;height:auto}
+.wrap{max-width:1080px;margin:0 auto;padding:40px 28px 96px}
+.back{display:inline-flex;gap:8px;color:var(--muted);text-decoration:none;font-size:14px;margin-bottom:48px}
+.back:hover{color:var(--ink)}
+.kicker{font-family:var(--mono);font-size:13px;color:var(--mint);margin-bottom:16px}
+h1{font-size:clamp(34px,5vw,54px);line-height:1.06;letter-spacing:-.035em;font-weight:700;margin-bottom:18px;max-width:16ch;text-wrap:balance}
+.lede{font-size:17.5px;color:var(--muted);max-width:640px;margin-bottom:36px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:56px}
+.stats div{padding:20px 22px;border-left:1px solid var(--line)}
+.stats div:first-child{border-left:0}
+.stats b{display:block;font-size:28px;letter-spacing:-.03em}
+.stats span{font-size:13px;color:var(--muted-2)}
+h2{font-size:24px;letter-spacing:-.02em;margin:64px 0 18px}
+figure{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface);min-width:0}
+figcaption{padding:14px 18px;font-size:14px;color:var(--muted);border-top:1px solid var(--line)}
+figcaption b{color:var(--ink);font-weight:600}
+.shots{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+.shots .wide{grid-column:1/-1}
+.pair{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:18px;align-items:start}
+.list{list-style:none;border-top:1px solid var(--line)}
+.list li{display:grid;grid-template-columns:170px minmax(0,1fr);gap:18px;padding:13px 0;border-bottom:1px solid var(--line);font-size:15px;color:var(--muted)}
+.list b{color:var(--ink);font-weight:600}
+.stack{font-family:var(--mono);font-size:13px;color:var(--muted-2);margin-top:18px}
+.note{margin-top:56px;padding:20px 22px;border-left:2px solid var(--amber);background:rgba(242,166,90,.06);border-radius:0 10px 10px 0;font-size:14.5px;color:var(--muted)}
 .note strong{color:var(--ink)}
-@media(max-width:760px){.grid{grid-template-columns:1fr}li{flex-direction:column;gap:2px}li b{min-width:0}}
+@media(max-width:760px){
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stats div:nth-child(3){border-left:0}
+  .stats div:nth-child(n+3){border-top:1px solid var(--line)}
+  .shots,.pair{grid-template-columns:minmax(0,1fr)}
+  .pair figure:last-child{max-width:300px}
+  .list li{grid-template-columns:minmax(0,1fr);gap:2px}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-<a class="back" href="../index.html">← Portfólio</a>
+<main class="wrap">
+  <a class="back" href="../index.html#work"><span aria-hidden="true">←</span> Back to the portfolio</a>
 
-<div class="eyebrow">WooCommerce · WordPress · PHP</div>
-<h1>Marlowe Studio</h1>
-<p class="lede">Loja de vestuário de dança construída sobre WordPress e WooCommerce. Catálogo completo, variantes de tamanho e cor, carrinho, checkout com transferência bancária — e uma encomenda processada de ponta a ponta.</p>
+  <p class="kicker">03 · E-commerce</p>
+  <h1>Marlowe Studio, a dancewear store on WooCommerce</h1>
+  <p class="lede">A complete shop the owner can run on their own: catalogue with sizes and colours, cart, checkout and orders. It runs on WordPress with a custom Storefront child theme, so the look is the brand's and the shop stays standard WooCommerce underneath.</p>
 
-<div class="grid">
-  <div class="stat"><div class="n">20</div><div class="l">Produtos</div></div>
-  <div class="stat"><div class="n">12</div><div class="l">Categorias</div></div>
-  <div class="stat"><div class="n">79</div><div class="l">Variações</div></div>
-</div>
+  <div class="stats" aria-label="Store in numbers">
+    <div><b>20</b><span>products</span></div>
+    <div><b>12</b><span>categories</span></div>
+    <div><b>79</b><span>size &amp; colour variations</span></div>
+    <div><b>#150</b><span>order placed end to end</span></div>
+  </div>
 
-<h2>A loja a funcionar</h2>
+  <h2>The store</h2>
+  <div class="shots">
+    <figure class="wide">
+      <img src="../thumbs/store-shop.png" width="1280" height="800" alt="Marlowe Studio homepage: a raspberry hero reading Made to move, with four products and a black service band" loading="lazy">
+      <figcaption><b>Homepage.</b> A sales page instead of a blog: headline, four best-known products with price, delivery and exchange promises, then categories, new arrivals and favourites.</figcaption>
+    </figure>
+    <figure>
+      <img src="../thumbs/store-product.png" width="1280" height="800" alt="Product page for the Classic Ballet Leotard with size and colour selected and stock shown" loading="lazy">
+      <figcaption><b>Product.</b> Size and colour pick a real variation, with its own stock count.</figcaption>
+    </figure>
+    <figure>
+      <img src="../thumbs/store-checkout.png" width="1280" height="800" alt="Checkout page with billing details and the order summary" loading="lazy">
+      <figcaption><b>Checkout.</b> Billing form, order summary and two payment methods.</figcaption>
+    </figure>
+  </div>
 
-<figure>
-  <img src="../thumbs/store-shop.png" alt="Grelha de produtos da loja Marlowe Studio" loading="lazy">
-  <figcaption><b>Catálogo.</b> 20 produtos em 12 categorias, com preços, imagens e botões de compra. Paginação e ordenação funcionais.</figcaption>
-</figure>
+  <h2>On a phone</h2>
+  <div class="pair">
+    <ul class="list">
+      <li><b>Layout</b>The hero stacks, products sit two to a row like a fashion catalogue, and the cart, search and account live in a bar at the bottom of the screen.</li>
+      <li><b>Checked</b>Homepage, shop, product, cart and checkout at 375 px and 1280 px: no sideways scrolling and no console errors.</li>
+    </ul>
+    <figure>
+      <img src="../thumbs/store-mobile.png" width="390" height="844" alt="Marlowe Studio homepage on a phone" loading="lazy">
+    </figure>
+  </div>
 
-<figure>
-  <img src="../thumbs/store-checkout.png" alt="Checkout com formulário de faturação e resumo do pedido" loading="lazy">
-  <figcaption><b>Checkout.</b> Formulário de faturação, resumo do pedido com subtotal, e dois métodos de pagamento configurados.</figcaption>
-</figure>
+  <h2>What was built</h2>
+  <ul class="list">
+    <li><b>Catalogue</b>20 products with a unique SKU, price and image each, in 12 categories</li>
+    <li><b>Variations</b>79 size and colour variations generated from WooCommerce attributes</li>
+    <li><b>Theme</b>A Storefront child theme: brand type and colour, a sales homepage, a service band, category tiles and a footer with the shop's own links</li>
+    <li><b>Product images</b>One illustration per product, drawn in SVG and rendered to PNG so every image shares the same framing and light</li>
+    <li><b>Copy</b>Short and long descriptions for every product, with fabric and care notes</li>
+    <li><b>Checkout</b>Field validation, direct bank transfer with instructions, and cash on delivery</li>
+    <li><b>Orders</b>Order #150 placed from cart to "order received", with its number generated</li>
+  </ul>
+  <p class="stack">WordPress 7.1.3 · WooCommerce 11.2.1 · Storefront child theme · PHP · CSS</p>
 
-<a class="cta" href="http://127.0.0.1:8080/shop/" target="_blank" rel="noopener">Abrir a loja ao vivo →</a>
-
-<h2>O que foi implementado</h2>
-<ul>
-  <li><b>Catálogo</b>20 produtos com SKU único, preço em USD e imagem em todos</li>
-  <li><b>Variantes</b>79 variações de tamanho e cor geradas por atributos do WooCommerce</li>
-  <li><b>Categorias</b>12 categorias hierárquicas, com menu e filtros</li>
-  <li><b>Carrinho</b>Shortcode clássico, contador no cabeçalho, cálculo de totais</li>
-  <li><b>Checkout</b>Validação de campos e dois métodos de pagamento</li>
-  <li><b>Pagamentos</b>Transferência bancária com instruções, e pagamento na entrega</li>
-  <li><b>Encomendas</b>Pedido #150 processado de ponta a ponta com número gerado</li>
-  <li><b>Tema</b>Storefront, o tema oficial do WooCommerce</li>
-</ul>
-
-<h2>Nota técnica</h2>
-<ul>
-  <li><b>Base de dados</b>SQLite em desenvolvimento (produção usaria MySQL)</li>
-  <li><b>Pagamentos</b>Em modo de teste — nenhum cartão real é processado</li>
-  <li><b>Imagens</b>Placeholders gerados por script, não fotografias de produto</li>
-</ul>
-
-<div class="note">
-<strong>Demonstração conceptual.</strong> A marca, os produtos, os preços e os dados de clientes são fictícios e foram criados para demonstrar a implementação técnica. O link ao vivo aponta para um servidor local — disponível apenas enquanto estiver a correr.
-</div>
-
-</div>
+  <div class="note">
+    <strong>Self-initiated sample.</strong> The brand, products, prices, store policies and customer data are fictional. The store runs on a local server with SQLite (a live shop would use MySQL), payments are in test mode, and the product images are illustrations, not photographs.
+  </div>
+</main>
 </body>
 </html>
